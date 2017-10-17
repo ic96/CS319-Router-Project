@@ -1,18 +1,39 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import logo from './logo.svg';
+import MapView from './components/MapView';
 import './App.css';
 
 class App extends Component {
+  state = {
+    isLoading: true,
+    data: null,
+  }
+
+  componentDidMount() {
+    if (this.state.isLoading) {
+      axios.get('http://0.0.0.0:8000/userdevices/123/')
+        .then(response => {
+          this.setState({
+            isLoading: false,
+            data: response,
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }
+
   render() {
+    const { isLoading, data } = this.state;
+
     return (
       <div className="App">
-        <div className="App-header">
+        { (!isLoading) ?
+          <MapView sites={data.data} /> :
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        }
       </div>
     );
   }
