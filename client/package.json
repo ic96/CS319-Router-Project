@@ -6,8 +6,11 @@
     "react-scripts": "1.0.13"
   },
   "dependencies": {
+    "axios": "^0.16.2",
     "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "react-dom": "^15.6.1",
+    "react-google-maps": "^9.0.0",
+    "recompose": "^0.26.0"
   },
   "scripts": {
     "start": "react-scripts start",
