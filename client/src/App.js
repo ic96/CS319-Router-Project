@@ -12,7 +12,9 @@ class App extends Component {
 
   componentDidMount() {
     if (this.state.isLoading) {
-      axios.get('http://0.0.0.0:8000/userdevices/123/')
+      // dev mode -> uncomment 16 and comment line 17
+      // axios.get('http://0.0.0.0:8000/userdevices/123/')
+      axios.get('/userdevices/123/')
         .then(response => {
           this.setState({
             isLoading: false,
