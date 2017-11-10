@@ -81,6 +81,24 @@ class MapView extends Component {
         }
     }
 
+    function popUp(props){
+    return(<div className= "Site">
+
+        <h3>Device ID</h3>
+    <div>{props.device_recid}</div>
+
+    <h3> Device Type </h3>
+    <div>{props.device_type}</div>
+    <h3> Manufacturer</h3>
+    <div>{props.device_manufacturer}</div>
+    <h3> Description</h3>
+    <div>{props.device_description}</div>
+    <h3> IP Address</h3>
+    <div>{props.device_ip_address}</div>
+    </div>
+    )
+}
+
     render() {
         const google = window.google;
         const { center, sites } = this.props;
@@ -127,9 +145,9 @@ class MapView extends Component {
                                 <div>
                                     {
                                         site.site_devices.map(device => {
-                                            return (<div key={device.device_recid}>
-                                                    {JSON.stringify(device)}
-                                                </div>);
+                                            return (
+                                                popUp(device)
+                                            );
                                         })
                                     }
                                 </div>
