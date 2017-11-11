@@ -1,15 +1,32 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
-from django.shortcuts import render
+from django.conf import settings
 from django.http import HttpResponse, HttpResponseNotFound, Http404
-import models
+from django.shortcuts import render
+from django.views.generic import View
+
 import json
+import logging
+import models
+import os
 # Create your views here.
 
-def home(request):
-    print('called this')
-    return HttpResponse('Hello World')
+class Home(View):
+
+    def get(self, request):
+        try:
+            with open(os.path.join(settings.REACT_APP_DIR, 'build', 'index.html')) as f:
+                return HttpResponse(f.read())
+
+        except:
+            logging.exception('Production build not found')
+            return HttpResponse(
+                """
+                This URL is only accessible when the production server is built.
+                Navigate to client -> npm start -> navigate to
+                http://localhost:3000 instead.
+                """
+            )
 
 def device_status(request, device_id):
     print('called')
@@ -42,7 +59,7 @@ def customer_devices(request, customer_id):
 		site_postal_code = site.postal_code
 		site_latitude = site.latitude
 		site_longitude = site.longitude
-		
+
 		devices = models.MspDevice.objects.filter(site_recid=site_id)
 		device_list = []
 		for device in devices:
@@ -53,7 +70,7 @@ def customer_devices(request, customer_id):
 			device_type = device.device_type
 			device_mac_address = device.mac_address
 			device_ip_address = device.ip_address
-						
+
 			device_res = {
 				'device_recid': device_recid,
 				'device_id': device_id,
@@ -63,9 +80,9 @@ def customer_devices(request, customer_id):
 				'device_mac_address': device_mac_address,
 				'device_ip_address': device_ip_address
 			}
-			
+
 			device_list.append(device_res)
-			
+
 		site_res = {
 			'site_id': site_id,
 			'site_description': site_description,
@@ -78,7 +95,7 @@ def customer_devices(request, customer_id):
 			'site_longitude': site_longitude,
 			'site_devices': device_list
 		}
-	
+
 		site_list.append(site_res)
-		
+
 	return HttpResponse(json.dumps(site_list))

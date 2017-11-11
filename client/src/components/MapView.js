@@ -25,6 +25,25 @@ type MapViewState = {
     markers: [],
 };
 
+const PopUp = ({deviceData}) => {
+    console.log("popup data");
+    console.log(deviceData);
+    return (
+        <div className= "Site">
+            <h3>Device ID</h3>
+            <div>{deviceData.device_recid}</div>
+            <h3> Device Type </h3>
+            <div>{deviceData.device_type}</div>
+            <h3> Manufacturer</h3>
+            <div>{deviceData.device_manufacturer}</div>
+            <h3> Description</h3>
+            <div>{deviceData.device_description}</div>
+            <h3> IP Address</h3>
+            <div>{deviceData.device_ip_address}</div>
+        </div>
+    );
+}
+
 class MapView extends Component {
     props: MapViewProps;
     state: MapViewState;
@@ -57,7 +76,9 @@ class MapView extends Component {
                         siteId: siteId,
                         index: i,
                     };
-                    promises.push(axios.get(`http://0.0.0.0:8000/device/${recId}/`));
+                    // to work on development mode uncomment line 61 and comment line 62
+                    // promises.push(axios.get(`http://0.0.0.0:8000/device/${recId}/`));
+                    promises.push(axios.get(`/device/${recId}/`));
 
                 });
             });
@@ -127,9 +148,7 @@ class MapView extends Component {
                                 <div>
                                     {
                                         site.site_devices.map(device => {
-                                            return (<div key={device.device_recid}>
-                                                    {JSON.stringify(device)}
-                                                </div>);
+                                            <PopUp data={device} key={device.device_recid}/>
                                         })
                                     }
                                 </div>
@@ -155,7 +174,7 @@ const GoogleMapView = compose(
     })
   }),
   withProps({
-    googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places",
+    googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBtotw0UsgNWBC8seKmjGg42ANAKHlZZ7c&v=3.exp&libraries=geometry,drawing,places",
     loadingElement: <div style={{ height: `100%` }} />,
     containerElement: <div style={{ height: `800px` }} />,
     mapElement: <div style={{ height: `100%` }} />,
