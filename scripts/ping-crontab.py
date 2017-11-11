@@ -13,6 +13,10 @@ def ping_host(host, device_id):
     print('Pinging {0}'.format(host));
     p = subprocess.Popen(['ping', '-c', '1', host], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
+    
+    # Log ping results
+    file.write(out)
+    
     if err:
         print(err)
     else:
@@ -35,6 +39,9 @@ try:
     for res in cur:
         devices.append(res)
 
+    # Initiate logging file
+    file = open("ping_log.txt", "a")
+    
     # have to use a separate loop to not mess up the db cursor
     for device in devices:
         print(device)
