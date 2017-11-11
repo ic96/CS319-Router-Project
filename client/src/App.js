@@ -3,6 +3,7 @@ import axios from 'axios';
 import logo from './logo.svg';
 import MapView from './components/MapView';
 import './App.css';
+import Grid from './components/TableView'
 
 class App extends Component {
   state = {
@@ -13,8 +14,8 @@ class App extends Component {
   componentDidMount() {
     if (this.state.isLoading) {
       // dev mode -> uncomment 16 and comment line 17
-      // axios.get('http://0.0.0.0:8000/userdevices/123/')
-      axios.get('/userdevices/123/')
+      axios.get('http://0.0.0.0:8000/userdevices/123/')
+      //axios.get('/userdevices/123/')
         .then(response => {
           this.setState({
             isLoading: false,
@@ -31,11 +32,14 @@ class App extends Component {
     const { isLoading, data } = this.state;
 
     return (
-      <div className="App">
+      <div>
+        <div className="App">
         { (!isLoading) ?
           <MapView sites={data.data} /> :
           <img src={logo} className="App-logo" alt="logo" />
         }
+      </div>
+        <Grid/>
       </div>
     );
   }
