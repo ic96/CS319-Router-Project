@@ -36,10 +36,13 @@ class App extends Component {
       <div>
         <div className="App">
           { (!isLoading) ?
-            <MapView sites={data.data} /> :
+            <div>
+              <MapView sites={data.data} />
+              <TableViews data = {data.data}/>
+            </div>:
             <img src={logo} className="App-logo" alt="logo" />
           }
-          <TableViews/>
+          
         </div>
       </div>
     );

@@ -8,52 +8,47 @@ import ReactTable from "react-table";
 import "react-table/react-table.css";
 
 export default class TableView extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      data: makeData()
-    };
-  }
+
+
+  
   render() {
-    const { data } = this.state;
+    const { data } = this.props;
+    console.log(data);
     return (
       <div>
         <ReactTable
           data={data}
           columns={[
             {
-              Header: "Name",
               columns: [
                 {
-                  Header: "First Name",
-                  accessor: "firstName"
+                  Header: "Name",
+                  accessor: "site_address1"
                 },
                 {
-                  Header: "Last Name",
-                  id: "lastName",
-                  accessor: d => d.lastName
+                  Header: "Usage",
+                  id: "usage",
+                  accessor: d => d.usage
                 }
               ]
             },
             {
-              Header: "Info",
               columns: [
                 {
-                  Header: "Age",
-                  accessor: "age"
+                  Header: "Clients",
+                  accessor: "clients"
                 },
                 {
-                  Header: "Status",
-                  accessor: "status"
+                  Header: "Tags",
+                  accessor: "tags"
                 }
               ]
             },
             {
-              Header: 'Stats',
               columns: [
                 {
-                  Header: "Visits",
-                  accessor: "visits"
+                  Header: "Network Type",
+                  accessor: "network_type"
                 }
               ]
             }
