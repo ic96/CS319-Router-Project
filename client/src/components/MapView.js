@@ -77,8 +77,8 @@ class MapView extends Component {
                         index: i,
                     };
                     // to work on development mode uncomment line 61 and comment line 62
-                    // promises.push(axios.get(`http://0.0.0.0:8000/device/${recId}/`));
-                    promises.push(axios.get(`/device/${recId}/`));
+                    promises.push(axios.get(`http://0.0.0.0:8000/device/${recId}/`));
+                    // promises.push(axios.get(`/device/${recId}/`));
 
                 });
             });
