@@ -25,24 +25,46 @@ type MapViewState = {
     markers: [],
 };
 
-const PopUp = ({deviceData}) => {
-    console.log("popup data");
-    console.log(deviceData);
+const PopUpRow = ({row}) => {
+const { device_recid, device_type, device_manufacturer, device_description,
+        device_ip_address, latency} = row;
+        return(
+            <tr>
+                <td> {device_ip_address} </td>
+                <td> {device_type} </td>
+                <td> {device_manufacturer} </td>
+                <td> {device_description} </td>
+                <td> {latency} </td>
+                <button>Reporting Graph</button>
+                <button>Retrieve</button>
+            </tr>
+                )
+            }
+
+const PopUp = ({data}) => {
+
     return (
-        <div className= "Site">
-            <h3>Device ID</h3>
-            <div>{deviceData.device_recid}</div>
-            <h3> Device Type </h3>
-            <div>{deviceData.device_type}</div>
-            <h3> Manufacturer</h3>
-            <div>{deviceData.device_manufacturer}</div>
-            <h3> Description</h3>
-            <div>{deviceData.device_description}</div>
-            <h3> IP Address</h3>
-            <div>{deviceData.device_ip_address}</div>
+        <div className= "devicePopupRow">
+            <table>
+                <tbody>
+                    <tr>
+                        <th>IP Address</th>
+                        <th>Device Type</th>
+                        <th>Manufacturer</th>
+                        <th>Description</th>
+                        <th>Latency</th>
+                    </tr>
+                    {
+                        data.map(device =>
+                            <PopUpRow row = {device}/>
+                         )
+                    }
+                </tbody>
+            </table>
         </div>
     );
-}
+};
+
 
 class MapView extends Component {
     props: MapViewProps;
@@ -108,7 +130,7 @@ class MapView extends Component {
         const { siteData, isLoading } = this.state;
         let content = [];
         if (center && sites && google && !isLoading) {
-            console.log(siteData);
+            // console.log(siteData);
             Object.keys(siteData).forEach(siteId => {
                 const site = siteData[siteId];
 
@@ -147,9 +169,10 @@ class MapView extends Component {
                             }}>
                                 <div>
                                     {
-                                        site.site_devices.map(device => {
-                                            <PopUp data={device} key={device.device_recid}/>
-                                        })
+                                        // site.site_devices.map(device =>
+                                        //     <PopUp data={device} key={device.device_recid}/>
+                                        // )
+                                    <PopUp data={site.site_devices}/>
                                     }
                                 </div>
                             </InfoWindow>
