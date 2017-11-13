@@ -3,7 +3,8 @@ import axios from 'axios';
 import logo from './logo.svg';
 import MapView from './components/MapView';
 import './App.css';
-import Grid from './components/TableView'
+import {render} from "react-dom"
+import TableViews from './components/TableViews'
 
 class App extends Component {
   state = {
@@ -34,10 +35,12 @@ class App extends Component {
     return (
       <div>
         <div className="App">
-        { (!isLoading) ?
-          <MapView sites={data.data} /> :
-          <img src={logo} className="App-logo" alt="logo" />
-        }
+          { (!isLoading) ?
+            <MapView sites={data.data} /> :
+            <img src={logo} className="App-logo" alt="logo" />
+          }
+          <TableViews/>
+        </div>
       </div>
         <Grid/>
       </div>

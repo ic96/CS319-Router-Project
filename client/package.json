@@ -6,15 +6,17 @@
     "react-scripts": "1.0.13"
   },
   "dependencies": {
+    "ag-grid": "^13.0.0",
+    "ag-grid-react": "^13.3.0",
     "axios": "^0.16.2",
+    "namor": "^1.0.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-dom-factories": "^1.0.1",
     "react-google-maps": "^9.0.0",
+    "react-table": "^6.7.4",
     "recompose": "^0.26.0",
-    "webpack": "^3.8.1",
-    "ag-grid": "^13.0.0",
-    "ag-grid-react": "^13.0.0",
-    "react-dom-factories": "^1.0.1"
+    "webpack": "^3.8.1"
   },
   "scripts": {
     "start": "react-scripts start",
