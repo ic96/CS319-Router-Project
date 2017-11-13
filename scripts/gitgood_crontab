@@ -1,3 +1,5 @@
+# ASSUMPTION: THIS FILE AND ping-crontab.py LOCATED AT THE ROOT OF ubc05.
+#
 # Example of job definition:
 # .---------------- minute (0 - 59)
 # |  .------------- hour (0 - 23)
