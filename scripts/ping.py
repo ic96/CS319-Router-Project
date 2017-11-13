@@ -2,14 +2,14 @@ import psycopg2
 import subprocess
 import re
 
-get_device_data = "SELECT device_id, ip_address FROM msp_device;"
+get_device_data = "SELECT device_recid, ip_address FROM msp_device;"
 insert_data_capture = """
     INSERT INTO msp_data_capture
     (device_recid, latency_milliseconds, responded)
     VALUES ({0}, {1}, {2});
 """
 
-def ping_host(host, device_id):
+def ping_host(host, device_recid):
     print('Pinging {0}'.format(host));
     p = subprocess.Popen(['ping', '-c', '5', host], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
@@ -24,10 +24,10 @@ def ping_host(host, device_id):
             print('Avg latency for {0} = {1} ms'.format(host, res[1]))
             responded = True
             latency = res[1]
-            cur.execute(insert_data_capture.format(device_id, latency, responded))
+            cur.execute(insert_data_capture.format(device_recid, latency, responded))
 
 try:
-    conn = psycopg2.connect(dbname="msp_monitor", user="esmbackend", password="")
+    conn = psycopg2.connect(dbname="postgres", user="postgres", password="")
     cur = conn.cursor()
     cur.execute(get_device_data)
     devices = []
@@ -38,8 +38,8 @@ try:
     # have to use a separate loop to not mess up the db cursor
     for device in devices:
         print(device)
-        device_id, host = device;
-        ping_host(host, device_id)
+        device_recid, host = device;
+        ping_host(host, device_recid)
 
     conn.commit()
     cur.close()
