@@ -42,8 +42,6 @@ class App extends Component {
           <TableViews/>
         </div>
       </div>
-        <Grid/>
-      </div>
     );
   }
 }
