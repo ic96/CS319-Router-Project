@@ -1,5 +1,9 @@
-# ASSUMPTION: THIS FILE AND ping-crontab.py LOCATED AT THE ROOT OF ubc05.
-MAILTO=""
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+MAILTO=ubc05
+
+# For details see man 4 crontabs
+
 # Example of job definition:
 # .---------------- minute (0 - 59)
 # |  .------------- hour (0 - 23)
@@ -8,5 +12,5 @@ MAILTO=""
 # |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
 # |  |  |  |  |
 # *  *  *  *  * user-name  command to be executed
-* * * * * /usr/bin/python ~/ping-crontab.py
+* * * * * /usr/bin/python ~/ping-crontab.py >/dev/null 2>&1
 59 23 * * * /usr/bin/python ~/consolidation-crontab.py
