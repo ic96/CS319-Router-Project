@@ -95,6 +95,8 @@ CREATE TABLE msp_site (
     longitude character varying(12)
 );
 
+ALTER TABLE public.msp_site OWNER TO esmbackend;
+
 CREATE TABLE msp_data_capture (
     id BIGSERIAL PRIMARY KEY,
     device_recid integer NOT NULL,
@@ -104,7 +106,23 @@ CREATE TABLE msp_data_capture (
     FOREIGN KEY (device_recid) REFERENCES msp_device (device_recid)
 );
 
-ALTER TABLE public.msp_site OWNER TO esmbackend;
+CREATE TABLE msp_data_capture_level2 (
+    id BIGSERIAL PRIMARY KEY,
+    device_recid integer NOT NULL,
+    latency_milliseconds decimal,
+    responded boolean,
+    date_recorded timestamp without time zone DEFAULT (now() at time zone 'utc'),
+    FOREIGN KEY (device_recid) REFERENCES msp_device (device_recid)
+);
+
+CREATE TABLE msp_data_capture_level3 (
+    id BIGSERIAL PRIMARY KEY,
+    device_recid integer NOT NULL,
+    latency_milliseconds decimal,
+    responded boolean,
+    date_recorded timestamp without time zone DEFAULT (now() at time zone 'utc'),
+    FOREIGN KEY (device_recid) REFERENCES msp_device (device_recid)
+);
 
 --
 -- TOC entry 1218 (class 1259 OID 752618)
