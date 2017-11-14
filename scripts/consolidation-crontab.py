@@ -2,7 +2,8 @@ import psycopg2
 import datetime
 
 get_record = """
-    SELECT * FROM {0}
+    SELECT *, EXTRACT(DAY FROM(current_timestamp at time zone 'UTC')-date_recorded) AS record_age
+    FROM {0}
     ORDER BY device_recid, id asc;
 """
 
@@ -12,9 +13,9 @@ insert_data_capture = """
     VALUES ({1}, {2}, {3});
 """
 
-delete_over_90day = """
+delete_over_30day = """
     DELETE FROM {0}
-    WHERE (current_timestamp at time zone 'UTC')-date_recorded > (interval '{1} day');
+    WHERE (current_timestamp at time zone 'UTC')-date_recorded > (interval '30 day');
 """
 
 def average_records(records, target_table, n, last_records):
@@ -30,48 +31,49 @@ def average_records(records, target_table, n, last_records):
     while (i < len(records)):
         #print(record)
         record = records[i]
-        record_id, device_recid, latency, responded, date = record
+        record_id, device_recid, latency, responded, date, age = record
         
-        if (is_first_iter):
-            accumulated_latency = 0
-            row_count = 0
-            no_respond = 0
-            if (last_records.has_key(device_recid)):
-                last_end_id = last_records[device_recid]
-            else:
-                last_end_id = 0
-            current_end_id = last_end_id
-            current_device_recid = device_recid
-            is_first_iter = False
-        
-        if (last_end_id < record_id):
-            if (current_device_recid == device_recid):
-                if (responded):
-                    accumulated_latency += latency
-                else:
-                    no_respond += 1
-                
-                row_count += 1
-            else:
-                last_records[current_device_recid] = current_end_id
-                row_count = 0
-                i -= 1
-                is_first_iter = True
-            
-            if (row_count == n):
-                responded = False
-                average_latency = -1
-                
-                if (no_respond < n):
-                    average_latency = accumulated_latency / (n - no_respond)
-                    responded = True
-                            
-                cur.execute(insert_data_capture.format(target_table, current_device_recid, average_latency, responded))
+        if (age >= 30):
+            if (is_first_iter):
                 accumulated_latency = 0
                 row_count = 0
                 no_respond = 0
-                current_end_id = record_id
+                if (last_records.has_key(device_recid)):
+                    last_end_id = last_records[device_recid]
+                else:
+                    last_end_id = 0
+                current_end_id = last_end_id
+                current_device_recid = device_recid
+                is_first_iter = False
             
+            if (last_end_id < record_id):
+                if (current_device_recid == device_recid):
+                    if (responded):
+                        accumulated_latency += latency
+                    else:
+                        no_respond += 1
+                    
+                    row_count += 1
+                else:
+                    last_records[current_device_recid] = current_end_id
+                    row_count = 0
+                    i -= 1
+                    is_first_iter = True
+                
+                if (row_count == n):
+                    responded = False
+                    average_latency = -1
+                    
+                    if (no_respond < n):
+                        average_latency = accumulated_latency / (n - no_respond)
+                        responded = True
+                                
+                    cur.execute(insert_data_capture.format(target_table, current_device_recid, average_latency, responded))
+                    accumulated_latency = 0
+                    row_count = 0
+                    no_respond = 0
+                    current_end_id = record_id
+                
         i += 1
 
 try:
@@ -128,9 +130,9 @@ try:
     file.close()
     
     # Clear > 90 days
-    cur.execute(delete_over_90day.format('msp_data_capture', 30))
-    cur.execute(delete_over_90day.format('msp_data_capture_level2', 90))
-    cur.execute(delete_over_90day.format('msp_data_capture_level3', 90))
+    cur.execute(delete_over_30day.format('msp_data_capture'))
+    cur.execute(delete_over_30day.format('msp_data_capture_level2'))
+    cur.execute(delete_over_30day.format('msp_data_capture_level3'))
     conn.commit()
     
     cur.close()
