@@ -15,7 +15,7 @@ insert_data_capture = """
 
 delete_over_30day = """
     DELETE FROM {0}
-    WHERE (current_timestamp at time zone 'UTC')-date_recorded > (interval '30 day');
+    WHERE EXTRACT(DAY FROM(current_timestamp at time zone 'UTC')-date_recorded) > 30;
 """
 
 def average_records(records, target_table, n):
