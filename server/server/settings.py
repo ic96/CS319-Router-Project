@@ -87,8 +87,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'msp_monitor',
-        'USER': 'esmbackend',
-        'PASSWORD': '',
+        'USER': 'louis',
+        'PASSWORD': '123',
         'HOST': 'localhost',
         'POST': '',
     }
