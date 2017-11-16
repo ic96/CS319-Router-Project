@@ -42,7 +42,6 @@ const { device_recid, device_type, device_manufacturer, device_description,
             }
 
 const PopUp = ({data}) => {
-
     return (
         <div className= "devicePopupRow">
             <table>
@@ -99,8 +98,8 @@ class MapView extends Component {
                         index: i,
                     };
                     // to work on development mode uncomment line 61 and comment line 62
-                    promises.push(axios.get(`http://0.0.0.0:8000/device/${recId}/`));
-                    // promises.push(axios.get(`/device/${recId}/`));
+                    // promises.push(axios.get(`http://0.0.0.0:8000/device/${recId}/`));
+                    promises.push(axios.get(`/device/${recId}/`));
 
                 });
             });
@@ -169,10 +168,7 @@ class MapView extends Component {
                             }}>
                                 <div>
                                     {
-                                        // site.site_devices.map(device =>
-                                        //     <PopUp data={device} key={device.device_recid}/>
-                                        // )
-                                    <PopUp data={site.site_devices}/>
+                                        <PopUp data={site.site_devices}/>
                                     }
                                 </div>
                             </InfoWindow>
