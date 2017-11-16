@@ -39,7 +39,7 @@ def ping_host(host, device_id):
             file.write('[FAILURE] device_recid={0}, host={1}, date_time={2}\n'.format(device_id, host, datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S (UTC)")))
 
 try:
-    conn = psycopg2.connect(dbname="postgres", user="postgres", password="")
+    conn = psycopg2.connect(dbname="ubc05", user="ubc05", password="ubc$5")
     cur = conn.cursor()
     cur.execute(get_device_data)
     devices = []

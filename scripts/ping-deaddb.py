@@ -24,7 +24,7 @@ def ping_host(host, device_recid):
         read_cache_file()
     
     print('Pinging {0}'.format(host));
-    p = subprocess.Popen(['ping', '-c', '5', host], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p = subprocess.Popen(['ping', '-c', '1', host], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
 
     # Handle dead ip
@@ -34,7 +34,7 @@ def ping_host(host, device_recid):
         latency = -1
         cur.execute(insert_data_capture.format(device_recid, latency, responded))
     else:
-        matcher = re.compile("round-trip min/avg/max/stddev = (\d+.\d+)/(\d+.\d+)/(\d+.\d+)/(\d+.\d+)")
+        matcher = re.compile("rtt min/avg/max/mdev = (\d+.\d+)/(\d+.\d+)/(\d+.\d+)/(\d+.\d+)")
         res = matcher.search(out).groups()
         responded = False
         latency = None
@@ -51,7 +51,7 @@ def ping_host_down(host, device_recid):
 
     file = open("dbcache.txt", "a")
     print('Pinging {0}'.format(host));
-    p = subprocess.Popen(['ping', '-c', '5', host], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p = subprocess.Popen(['ping', '-c', '1', host], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
     print("code reach here")
     
@@ -63,7 +63,7 @@ def ping_host_down(host, device_recid):
         latency = -1
         file.write('{0},{1},{2}\n'.format(device_recid, latency, datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")))
     else:
-        matcher = re.compile("round-trip min/avg/max/stddev = (\d+.\d+)/(\d+.\d+)/(\d+.\d+)/(\d+.\d+)")
+        matcher = re.compile("rtt min/avg/max/mdev = (\d+.\d+)/(\d+.\d+)/(\d+.\d+)/(\d+.\d+)")
         res = matcher.search(out).groups()
         responded = False
         latency = None
@@ -97,7 +97,7 @@ def read_cache_file():
 
 
 try:
-    conn = psycopg2.connect(dbname="postgrest", user="postgres", password="")
+    conn = psycopg2.connect(dbname="ubc05", user="ubc05", password="UbC$5")
     cur = conn.cursor()
     cur.execute(get_device_data)
     devices = []
