@@ -6,7 +6,7 @@ get_device_data = "SELECT device_recid, ip_address FROM msp_device;"
 
 
 try:
-    conn = psycopg2.connect(dbname="ubc05", user="ubc05", password="UbC$5")
+    conn = psycopg2.connect(dbname="ubc05", user="ubc05", password="ubc$5")
     cur = conn.cursor()
     cur.execute(get_device_data)
     devices = []
