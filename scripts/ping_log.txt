@@ -10,3 +10,24 @@ FATAL:  database "postgrest" does not exist
 
 [ERROR] device_recid=234, host=www.facebook.ccccx, date_time=2017-11-18 22:52:32 (UTC)
 [ERROR] device_recid=123, host=www.google.cccc, date_time=2017-11-18 22:52:32 (UTC)
+[ERROR] device_recid=234, host=www.facebook.ccccx, date_time=2017-11-19 05:36:15 (UTC)
+[ERROR] device_recid=123, host=www.google.cccc, date_time=2017-11-19 05:36:15 (UTC)
+[ERROR] device_recid=234, host=www.facebook.ccccx, date_time=2017-11-19 05:39:52 (UTC)
+[ERROR] device_recid=123, host=www.google.cccc, date_time=2017-11-19 05:39:52 (UTC)
+[FAILURE] device_recid=2000, host=216.113.208.186, date_time=2017-11-19 05:40:07 (UTC)
+[FAILURE] device_recid=2000, host=216.113.208.186, date_time=2017-11-19 05:40:22 (UTC)
+[FAILURE] device_recid=2000, host=216.113.208.186, date_time=2017-11-19 05:40:37 (UTC)
+FATAL:  database "postgrest" does not exist
+
+[ERROR] device_recid=234, host=www.facebook.ccccx, date_time=2017-11-19 05:44:51 (UTC)
+[ERROR] device_recid=123, host=www.google.cccc, date_time=2017-11-19 05:44:51 (UTC)
+[FAILURE] device_recid=2000, host=216.113.208.186, date_time=2017-11-19 05:45:06 (UTC)
+[FAILURE] device_recid=2000, host=216.113.208.186, date_time=2017-11-19 05:45:21 (UTC)
+[FAILURE] device_recid=2000, host=216.113.208.186, date_time=2017-11-19 05:45:36 (UTC)
+insert or update on table "msp_data_capture" violates foreign key constraint "msp_data_capture_device_recid_fkey"
+DETAIL:  Key (device_recid)=(2000) is not present in table "msp_device".
+
+[ERROR] device_recid=234, host=www.facebook.ccccx, date_time=2017-11-19 05:52:30 (UTC)
+[ERROR] device_recid=123, host=www.google.cccc, date_time=2017-11-19 05:52:30 (UTC)
+[ERROR] device_recid=234, host=www.facebook.ccccx, date_time=2017-11-19 05:56:23 (UTC)
+[ERROR] device_recid=123, host=www.google.cccc, date_time=2017-11-19 05:56:23 (UTC)

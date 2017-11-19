@@ -30,36 +30,36 @@ def ping_host(host, device_recid, is_db_down):
     print('Pinging {0}'.format(host));
     p = subprocess.Popen(['ping', '-c', '5', host], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
-    
+
     if err:
         #print(err)
-        #Initiate logging file
+        #log the ping error. e.g The ip address is invalid like www.google.cccc
         pingError = open("ping_log.txt", "a")
-        #Write ping error to log file
         pingError.write('[ERROR] device_recid={0}, host={1}, date_time={2}\n'.format(device_recid, host, datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S (UTC)")))
-        
-        responded = False
-        latency = -1
-        if (not is_db_down):
-            cur.execute(insert_data_capture.format(device_recid, latency, responded))
-        else:
-            file.write('{0},{1},{2}\n'.format(device_recid, latency, datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")))
-            # log the db failure
-            dbFailure = open("ping_log.txt", "a")
-            dbFailure.write('[FAILURE] device_recid={0}, host={1}, date_time={2}\n'.format(device_recid, host, datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S (UTC)")))
-    
     else:
         matcher = re.compile("round-trip min/avg/max/stddev = (\d+.\d+)/(\d+.\d+)/(\d+.\d+)/(\d+.\d+)")
-        res = matcher.search(out).groups()
-        if res:
-            #print('Latency for {0} = {1} ms'.format(host, res[1]))
-            responded = True
-            latency = res[1]
+        responded = False
+        latency = -1
+        try:
+            res = matcher.search(out).groups()
+            if res:
+                #print('Latency for {0} = {1} ms'.format(host, res[1]))
+                responded = True
+                latency = res[1]
+                if (not is_db_down):
+                    cur.execute(insert_data_capture.format(device_recid, latency, responded))
+                else:
+                    file.write('{0},{1},{2}\n'.format(device_recid, latency, datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")))
+                #file.write('[SUCCESS] device_recid={0}, host={1}, latency={2}, date_time={3}\n'.format(device_recid, host, latency, datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S (UTC)")))
+        except Exception as e:
+            #print('No return for {0}'.format(host))
             if (not is_db_down):
                 cur.execute(insert_data_capture.format(device_recid, latency, responded))
             else:
                 file.write('{0},{1},{2}\n'.format(device_recid, latency, datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")))
-                #file.write('[SUCCESS] device_recid={0}, host={1}, latency={2}, date_time={3}\n'.format(device_recid, host, latency, datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S (UTC)")))
+                # log the ping failure. eg. No packets are return eventhough the ip is valid
+                pingFailure = open("ping_log.txt", "a")
+                pingFailure.write('[FAILURE] device_recid={0}, host={1}, date_time={2}\n'.format(device_recid, host, datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S (UTC)")))
 
 def read_cache_file():
     file = open("dbcache.txt", "r")

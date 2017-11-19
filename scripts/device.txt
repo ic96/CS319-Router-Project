@@ -14,3 +14,6 @@
 1005,78A907CBDA96.sn.mynetname.net
 234,www.facebook.ccccx
 123,www.google.cccc
+2000,216.113.208.186
+2000,216.113.208.186
+2000,216.113.208.186
