@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import logo from './logo.svg';
+import ChartView from './components/ChartView';
 import MapView from './components/MapView';
 import { UniserveHeader, UniserveMenu, UniserveFooter } from './components/UniserveComponents'
 import './App.css';
@@ -43,6 +44,7 @@ class App extends Component {
           { (!isLoading) ?
             <div className='page'>
               <MapView sites={data.data} />
+              <ChartView sites={data.data} />
               <TableViews data = {data.data}/>
             </div>:
             <img src={logo} className="App-logo" alt="logo" />
