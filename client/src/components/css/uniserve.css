@@ -56,10 +56,7 @@ footer {
 footer h4 { color: #333; }
 footer a:link,
 footer a:visited { color: #666; text-decoration: none; }
-footer p {
-    width: 90%;
-    margin: 0 auto;
-}
+footer p { width: 90%; margin: 0 auto; }
 h5 {
     font-family:  "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 200;
@@ -209,12 +206,12 @@ table.buttonbar {
     white-space: nowrap;
 }
 table.buttonbar td.left {
-    background: url(/images/button/left.gif) no-repeat left top;
+    /*background: url(/images/button/left.gif) no-repeat left top;*/
     width: 10px;
     white-space: nowrap;
 }
 table.buttonbar td.right {
-    background: url(/images/button/right.gif) no-repeat right top;
+    /*background: url(/images/button/right.gif) no-repeat right top;*/
     width: 10px;
     white-space: nowrap;
 }
@@ -461,7 +458,7 @@ textarea {
     clear:both;
 }
 .logofooter{
-    background-image: url(../images/uniserve_logo_footer.png);
+    /*background-image: url(../images/uniserve_logo_footer.png);*/
     background-repeat: no-repeat;
     width: 130px;
     height: 48px;
@@ -495,7 +492,7 @@ textarea {
     display: block;
     width: 30px;
     height: 30px;
-    background: url("../images/social_media_facebook.png") no-repeat 0 0;
+    /*background: url("../images/social_media_facebook.png") no-repeat 0 0;*/
     margin-top: 0px;
     margin-bottom: 0px;
     margin-left: 5px;
@@ -506,7 +503,7 @@ textarea {
     display: block;
     width: 30px;
     height: 30px;
-    background: url("../images/social_media_twitter.png") no-repeat 0 0;
+    /*background: url("../images/social_media_twitter.png") no-repeat 0 0;*/
     margin-top: 0px;
     margin-bottom: 0px;
     margin-left: 5px;
@@ -517,7 +514,7 @@ textarea {
     display: block;
     width: 30px;
     height: 30px;
-    background: url("../images/social_media_linkedin.png") no-repeat 0 0;
+    /*background: url("../images/social_media_linkedin.png") no-repeat 0 0;*/
     margin-top: 0px;
     margin-bottom: 0px;
     margin-left: 5px;
@@ -1171,7 +1168,8 @@ i {
 .form_table input.text {padding:3px 0px 3px 13px; width:200px; margin-bottom: 5px; margin-right: 6px; }
 .form_table label {display:block; font-size:14px;}
 .form_table label div{float: left; width: 45%; text-align: right; padding-right: 10px; margin-top: 8px; font-weight: bold;}
-.form_table select {background: #FFF url('../images/grey_down-arrow.png') no-repeat right;
+.form_table select {
+    /*background: #FFF url('../images/grey_down-arrow.png') no-repeat right;*/
     appearance: none;
     -webkit-appearance:none;
     -moz-appearance: none;
@@ -1550,7 +1548,7 @@ ul.footer-menu{
 /*** Search widget ***/
 #searchform input.search-input {
     border: 1px solid #e9e9e9;
-    background: #fff url(images/searchsubmit.png) no-repeat 94% 15px;
+    /*background: #fff url(images/searchsubmit.png) no-repeat 94% 15px;*/
     padding: 14px 43px 14px 20px;
     color: #313131;
     letter-spacing: 1px;

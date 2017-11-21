@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import logo from './logo.svg';
 import MapView from './components/MapView';
+import { UniserveHeader, UniserveMenu, UniserveFooter } from './components/UniserveComponents'
 import './App.css';
+import './components/css/uniserve.css';
 import {render} from "react-dom"
 import TableViews from './components/TableViews'
+
 
 class App extends Component {
   state = {
@@ -35,13 +38,16 @@ class App extends Component {
     return (
       <div>
         <div className="App">
+          <UniserveHeader />
+          <UniserveMenu />
           { (!isLoading) ?
-            <div>
+            <div className='page'>
               <MapView sites={data.data} />
               <TableViews data = {data.data}/>
             </div>:
             <img src={logo} className="App-logo" alt="logo" />
           }
+          <UniserveFooter />
         </div>
       </div>
     );
