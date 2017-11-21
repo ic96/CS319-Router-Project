@@ -1,5 +1,6 @@
 import React from 'react';
 import './css/uniserve.css';
+import UniserveLogo from '../uniserve_logo.png';
 
 export const UniserveHeader = () => {
     return (
@@ -7,7 +8,7 @@ export const UniserveHeader = () => {
             <table width="100%" cellPadding="0" cellSpacing="0" style={{ align: 'center', border: 0}}>
                 <tbody><tr>
                 <td className="bg-main" height="90" style={{ align: 'left', valign: 'middle'}}>
-                <a href="http://www.uniserve.com"><img src="../uniserve_logo.png" style={{height: 'auto', width: 'auto', marginRight: '100%' }}/></a>
+                <a href="http://www.uniserve.com"><img src={UniserveLogo} style={{height: 'auto', width: 'auto', marginRight: '100%' }}/></a>
                 </td>
                 <td></td>
                 <td className="sign_button" style={{ align: 'right' }}>
