@@ -16,7 +16,7 @@ class App extends Component {
     if (this.state.isLoading) {
       // dev mode -> uncomment 16 and comment line 17
       // axios.get('http://0.0.0.0:8000/userdevices/123/')
-      axios.get('/userdevices/123/')
+      axios.get('/userdevices/1000/')
         .then(response => {
           this.setState({
             isLoading: false,
