@@ -55,7 +55,8 @@ coverage.xml
 local_settings.py
 server/
 server/server/
-
+settings.py
+wsgi.py
 # Flask stuff:
 instance/
 .webassets-cache

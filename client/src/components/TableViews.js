@@ -130,9 +130,7 @@ export default class TableView extends React.Component {
               );
           }}
           />
-        <br />
-        <Tips />
-        <Logo />
+        <br/>
       </div>
     );
   }

@@ -5,6 +5,7 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render
 from django.views.generic import View
 
+import datetime
 import json
 import logging
 import models
@@ -27,6 +28,23 @@ class Home(View):
                 http://localhost:3000 instead.
                 """
             )
+
+def datetime_handler(x):
+    if isinstance(x, datetime.datetime):
+        return x.isoformat()
+    raise TypeError("Unknown type")
+
+def device_history(request, device_id):
+    print('Called device_history with {0}'.format(device_id))
+    data_capture = models.MspDataCapture.objects.filter(device_recid=device_id)[:100]
+
+    res = [{
+        'device_id': device_data.device_recid.device_recid,
+        'ip_address': device_data.device_recid.ip_address,
+        'latency': float(device_data.latency_milliseconds),
+        'date_recorded': json.dumps(device_data.date_recorded, default=datetime_handler),
+    } for device_data in data_capture]
+    return HttpResponse(json.dumps(res))
 
 def device_status(request, device_id):
     print('called')
