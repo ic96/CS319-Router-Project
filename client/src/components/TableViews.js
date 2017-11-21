@@ -25,8 +25,7 @@ const columns = [
         columns: [
             {
                 Header: "Clients",
-                accessor: "clients"
-
+                accessor: "clients",
 
             }
         ]
@@ -39,14 +38,14 @@ const columns = [
             }
         ]
     },
-    {
-        columns: [
-            {
-                Header: "Network Health",
-                accessor: "network_health"
-            }
-        ]
-    }
+    //{
+    //     columns: [
+    //         {
+    //             Header: "Network Health",
+    //             accessor: "network_health"
+    //         }
+    //     ]
+    // }
 ];
 
 const subColumns = [
@@ -79,8 +78,19 @@ const subColumns = [
     {
         columns: [
             {
-                Header: "Latency",
-                accessor: "latency"
+                Header: "Network Health",
+                accessor: "latency",
+                width: 150,
+                getProps: (state, rowInfo, column, row) => {
+                  if(rowInfo != null){
+                    console.log(rowInfo.row['latency']);
+                  }
+                  return{
+                    style: {
+                      background: rowInfo? '#FF3C3C':'#33cc66'
+                    }
+                  }
+                }
             }
         ]
     }

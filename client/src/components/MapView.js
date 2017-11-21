@@ -98,8 +98,8 @@ class MapView extends Component {
                         index: i,
                     };
                     // to work on development mode uncomment line 61 and comment line 62
-                    promises.push(axios.get(`http://0.0.0.0:8000/device/${recId}/`));
-                    // promises.push(axios.get(`/device/${recId}/`));
+                    //promises.push(axios.get(`http://0.0.0.0:8000/device/${recId}/`));
+                    promises.push(axios.get(`/device/${recId}/`));
 
                 });
             });
@@ -178,7 +178,7 @@ class MapView extends Component {
             });
         }
 
-        return (<GoogleMap defaultZoom={3} defaultCenter={{ lat: 54.322498, lng: -108.583205 }}>
+        return (<GoogleMap defaultZoom={3} defaultCenter={{ lat: 54.322498, lng: -108.583205 }} options={{ minZoom: 3, maxZoom: 7}}>
                 {content}
               </GoogleMap>);
     }
@@ -195,7 +195,7 @@ const GoogleMapView = compose(
   withProps({
     googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBtotw0UsgNWBC8seKmjGg42ANAKHlZZ7c&v=3.exp&libraries=geometry,drawing,places",
     loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `800px` }} />,
+    containerElement: <div style={{ height: `700px` }} />,
     mapElement: <div style={{ height: `100%` }} />,
     center: { lat: 54.322498, lng: -108.583205 },
   }),
