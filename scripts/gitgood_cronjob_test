@@ -14,4 +14,4 @@ MAILTO=ubc05
 # *  *  *  *  * user-name  command to be executed
 * * * * * /usr/bin/python ~/scripts/ping-crontab.py >/dev/null 2>&1
 0 * * * * /usr/bin/python ~/scripts/device-crontab.py >/dev/null 2>&1
-59 23 * * * /usr/bin/python ~/scripts/consolidation-crontab.py
+59 23 * * * /usr/bin/python ~/scripts/consolidation-crontab-minute.py
