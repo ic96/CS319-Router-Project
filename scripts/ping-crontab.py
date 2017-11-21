@@ -28,7 +28,7 @@ def ping_host(host, device_recid, is_db_down):
         file = open("dbcache.txt", "a")
         
     print('Pinging {0}'.format(host));
-    p = subprocess.Popen(['ping', '-c', '5', host], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p = subprocess.Popen(['ping', '-c', '1', host], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
 
     if err:
@@ -37,7 +37,7 @@ def ping_host(host, device_recid, is_db_down):
         pingError = open("ping_log.txt", "a")
         pingError.write('[ERROR] device_recid={0}, host={1}, date_time={2}\n'.format(device_recid, host, datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S (UTC)")))
     else:
-        matcher = re.compile("round-trip min/avg/max/stddev = (\d+.\d+)/(\d+.\d+)/(\d+.\d+)/(\d+.\d+)")
+        matcher = re.compile("rtt min/avg/max/mdev = (\d+.\d+)/(\d+.\d+)/(\d+.\d+)/(\d+.\d+)")
         responded = False
         latency = -1
         try:
@@ -80,7 +80,7 @@ def read_cache_file():
     open('dbcache.txt', 'w').close()
 
 try:
-    conn = psycopg2.connect(dbname="postgres", user="postgres", password="")
+    conn = psycopg2.connect(dbname="ubc05", user="ubc05", password="UbC$5")
     cur = conn.cursor()
     cur.execute(get_device_data)
     devices = []
