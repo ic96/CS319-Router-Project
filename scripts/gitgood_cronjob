@@ -1,6 +1,6 @@
 SHELL=/bin/bash
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
-MAILTO=root
+MAILTO=ubc05
 
 # For details see man 4 crontabs
 
@@ -12,6 +12,6 @@ MAILTO=root
 # |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
 # |  |  |  |  |
 # *  *  *  *  * user-name  command to be executed
-* * * * * /usr/bin/python ~/ping-crontab.py >/dev/null/ 2>&1
-0 * * * * /usr/bin/python ~/device-crontab.py >/dev/null/ 2>&1
+* * * * * /usr/bin/python ~/ping-crontab.py >/dev/null 2>&1
+0 * * * * /usr/bin/python ~/device-crontab.py >/dev/null 2>&1
 59 23 * * * /usr/bin/python ~/consolidation-crontab.py
