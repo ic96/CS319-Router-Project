@@ -16,21 +16,25 @@ try:
    conn = psycopg2.connect(dbname="ubc05", user="louis", password="123")
    cur = conn.cursor()
    cur.execute(get_sites)
-  
-   for line in cur:
+   sites = cur.fetchall()
+   
+   for line in sites:
       print(line)
       site = line[0]
       address = line[1]
       postal = line[3]
       result = gmaps.geocode(address + ' ' + postal)
       if len(result) >= 1:
-      #   latitude = result[0]["geometry"]["lat"]
-      #   longitude = result[0]["geometry"]["lng"]
-         print(result[0]["geometry"])
-#         update_query = "update msp_site SET (latitude,longitude) = ("+latitude+","+longitude+") where site_recid = " + site + ";" 
+         latitude = result[0]["geometry"]["location"]["lat"]
+         longitude = result[0]["geometry"]["location"]["lng"]
+         print(result[0]["geometry"]["location"])
+         update_query = "update msp_site SET (latitude,longitude) = ("+str(latitude)+","+str(longitude)+") where site_recid = " + str(site) + ";" 
+         print (update_query)
+         cur.execute(update_query)
       else:
         print(address+" Got No result")
 
+   conn.close()
 except Exception as e:
        print(e)
 finally:
