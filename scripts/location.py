@@ -34,12 +34,14 @@ try:
       else:
         print(address+" Got No result")
 
-   conn.close()
+#      conn.commit()
+#      conn.close()
 except Exception as e:
        print(e)
 finally:
        if conn is not None:
-                  conn.close()
+          conn.commit()
+          conn.close()
    
 
 
