@@ -87,8 +87,9 @@ class ChartView extends PureComponent {
         const promises = [];
         sites.forEach(site => {
             site.site_devices.forEach(device => {
-                promises.push(axios.get(`http://0.0.0.0:8000/devicehistory/${device.device_recid}/`));
-            })
+                promises.push(axios.get(`/devicehistory/${device.device_recid}/`));
+                // promises.push(axios.get(`http://0.0.0.0:8000/devicehistory/${device.device_recid}/`));
+            });
         });
 
         Promise.all(promises)
