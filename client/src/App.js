@@ -10,17 +10,86 @@ import {render} from "react-dom"
 import TableViews from './components/TableViews'
 
 
+// move this somewhere else
+class LoginMenu extends Component {
+  state = {
+    username: '',
+    password: '',
+  }
+
+  handleChangeUsername = (event) => {
+    this.setState({ username: event.target.value });
+  }
+
+  handleChangePassword = (event) => {
+    this.setState({ password: event.target.value });
+  }
+
+  render() {
+      return (
+        <div>
+          <label>
+            Username:
+            <input type="text" value={this.state.username} onChange={this.handleChangeUsername} />
+          </label>
+          <label>
+            Password:
+            <input type="text" value={this.state.password} onChange={this.handleChangePassword} />
+          </label>
+          <input type="submit" value="Submit" onClick={() => {
+            this.props.handleSubmit(this.state.username, this.state.password)
+          }} />
+          </div>
+        );
+  }
+};
+
 class App extends Component {
   state = {
     isLoading: true,
     data: null,
+    selectedIds: {},
+    companyRecId: null,
+  };
+
+  // show graph for site
+  onSiteSelected = siteDevices => {
+    const selectedIds = this.state.selectedIds;
+    siteDevices.forEach(device => {
+      selectedIds[device.device_recid] = selectedIds[device.device_recid] ? false : true;
+    });
+    this.setState({
+      selectedIds,
+    });
+  };
+
+  // show graph for device
+  onDeviceSelected = deviceRecId => {
+    const selectedIds = this.state.selectedIds;
+    selectedIds[deviceRecId] = selectedIds[deviceRecId] ? false : true;
+    this.setState({
+      selectedIds,
+    });
+  };
+
+  handleSubmit = (username, password) => {
+    // axios.get(`http://0.0.0.0:8000/login?username=${username}&password=${password}`)
+    axios.get(`/login?username=${username}&password=${password}`)
+    .then(response => {
+        this.setState({
+          companyRecId: response.data === 'None' ? null : response.data,
+        });
+    }, err => {
+      console.log(err);
+    });
   }
 
-  componentDidMount() {
-    if (this.state.isLoading) {
+  componentDidUpdate() {
+    const { isLoading, companyRecId } = this.state;
+    if (isLoading && companyRecId) {
       // dev mode -> uncomment 16 and comment line 17
-      // axios.get('http://0.0.0.0:8000/userdevices/123/')
-      axios.get('/userdevices/1000/')
+      // axios.get(`http://0.0.0.0:8000/userdevices/${companyRecId}/`)
+      axios.get(`/userdevices/${companyRecId}/`)
         .then(response => {
           this.setState({
             isLoading: false,
@@ -34,20 +103,34 @@ class App extends Component {
   }
 
   render() {
-    const { isLoading, data } = this.state;
-
+    const { isLoading, data, selectedIds, companyRecId } = this.state;
+    const validIds = Object.keys(selectedIds).filter(key => {
+      return selectedIds[key];
+    });
     return (
       <div>
         <div className="App">
           <UniserveHeader />
           <UniserveMenu />
-          { (!isLoading) ?
+          {
+            companyRecId ?
+            ((!isLoading) ?
             <div className='page'>
-              <MapView sites={data.data} />
-              <ChartView sites={data.data} />
-              <TableViews data = {data.data}/>
+              <MapView
+                sites={data.data}
+                onSiteSelected={this.onSiteSelected}
+                onDeviceSelected={this.onDeviceSelected}
+              />
+              <ChartView deviceIds={validIds} />
+              <TableViews
+                data={data.data}
+                onSiteSelected={this.onSiteSelected}
+                onDeviceSelected={this.onDeviceSelected}
+              />
             </div>:
             <img src={logo} className="App-logo" alt="logo" />
+            ) :
+            <LoginMenu handleSubmit={this.handleSubmit} />
           }
           <UniserveFooter />
         </div>

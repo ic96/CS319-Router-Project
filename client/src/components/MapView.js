@@ -10,6 +10,7 @@ import {
 } from "react-google-maps";
 import responsiveMarker from "../responsive.png";
 import failureMarker from "../failure.png";
+import './css/MapView.css';
 
 type MapViewProps = {
     center: {
@@ -17,6 +18,10 @@ type MapViewProps = {
         long: string,
     },
     sites: [],
+    // takes in site_devices object
+    onSiteSelected: Function,
+    // takes a device_recid as the param
+    onDeviceSelected: Function,
 };
 
 type MapViewState = {
@@ -25,22 +30,21 @@ type MapViewState = {
     markers: [],
 };
 
-const PopUpRow = ({row}) => {
+const PopUpRow = ({row, handleClick}) => {
 const { device_recid, device_type, device_manufacturer, device_description,
         device_ip_address, latency} = row;
         return(
-            <tr>
+            <tr onClick={() => {handleClick(device_recid)}} className='deviceRow'>
                 <td> {device_ip_address} </td>
                 <td> {device_type} </td>
                 <td> {device_manufacturer} </td>
                 <td> {device_description} </td>
                 <td> {latency} </td>
-                <button>Reporting Graph</button>
             </tr>
                 )
             }
 
-const PopUp = ({data}) => {
+const PopUp = ({data, handleClick}) => {
     return (
         <div className= "devicePopupRow">
             <table>
@@ -54,7 +58,11 @@ const PopUp = ({data}) => {
                     </tr>
                     {
                         data.map(device =>
-                            <PopUpRow row = {device}/>
+                            <PopUpRow
+                                row={device}
+                                handleClick={handleClick}
+                                key={device.device_recid}
+                            />
                          )
                     }
                 </tbody>
@@ -75,7 +83,7 @@ class MapView extends Component {
 
     // TODO: move to another fn (maybe utils.js)
     componentDidMount() {
-        const { sites } = this.props;
+        const { sites, onSiteSelected, onDeviceSelected } = this.props;
         if (this.state.isLoading && sites) {
             const siteData = {};
             const deviceSiteMap = {};
@@ -97,7 +105,7 @@ class MapView extends Component {
                         index: i,
                     };
                     // to work on development mode uncomment line 61 and comment line 62
-                    //promises.push(axios.get(`http://0.0.0.0:8000/device/${recId}/`));
+                    // promises.push(axios.get(`http://0.0.0.0:8000/device/${recId}/`));
                     promises.push(axios.get(`/device/${recId}/`));
 
                 });
@@ -124,7 +132,7 @@ class MapView extends Component {
 
     render() {
         const google = window.google;
-        const { center, sites } = this.props;
+        const { center, sites, onSiteSelected, onDeviceSelected } = this.props;
         const { siteData, isLoading } = this.state;
         let content = [];
         if (center && sites && google && !isLoading) {
@@ -149,6 +157,7 @@ class MapView extends Component {
                         }}
                         onClick={() => {
                             siteData[siteId].isShowing = true;
+                            onSiteSelected(site.site_devices);
                             this.setState({
                                 siteData,
                                 isLoading: false,
@@ -167,7 +176,10 @@ class MapView extends Component {
                             }}>
                                 <div>
                                     {
-                                        <PopUp data={site.site_devices}/>
+                                        <PopUp
+                                            data={site.site_devices}
+                                            handleClick={onDeviceSelected}
+                                        />
                                     }
                                 </div>
                             </InfoWindow>
@@ -204,6 +216,8 @@ const GoogleMapView = compose(
     <MapView
         sites={props.sites}
         center={props.center}
+        onSiteSelected={props.onSiteSelected}
+        onDeviceSelected={props.onDeviceSelected}
     />
 );
 

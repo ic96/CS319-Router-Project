@@ -9,35 +9,35 @@ import "react-table/react-table.css";
 
 const columns = [
     {
-        columns: [
-            {
-                Header: "Name",
-                accessor: "site_address1"
-            },
-            {
-                Header: "Usage",
-                id: "usage",
-                accessor: d => d.usage
+        Header: "Name",
+        accessor: "site_address1",
+        // TODO: HANDLE ONCLICK THE SAME WAY HERE AS IN MAPVIEW
+        getProps: (state, rowInfo, column, row) => {
+          if (rowInfo != null) {
+            return {
+              onClick: () => {
+                console.log(rowInfo);
+              }
             }
-        ]
-    },
-    {
-        columns: [
-            {
-                Header: "Clients",
-                accessor: "clients",
+          }
 
-            }
-        ]
+          return {};
+        },
     },
     {
-        columns: [
-            {
-                Header: "Network Type",
-                accessor: "network_type"
-            }
-        ]
+        Header: "Usage",
+        id: "usage",
+        accessor: d => d.usage
     },
+    {
+        Header: "Clients",
+        accessor: "clients",
+
+    },
+    {
+        Header: "Network Type",
+        accessor: "network_type"
+    }
     //{
     //     columns: [
     //         {
@@ -50,66 +50,30 @@ const columns = [
 
 const subColumns = [
     {
-        columns: [
-            {
-                Header: "Name",
-                accessor: "device_description"
-            }
-        ]
-    },
-    {
-        columns: [
-            {
-                Header: "IP Address",
-                accessor: "device_ip_address"
-
-
-            }
-        ]
-    },
-    {
-        columns: [
-            {
-                Header: "Network Type",
-                accessor: "device_type"
-            }
-        ]
-    },
-    {
-        columns: [
-            {
-                Header: "Network Health",
-                accessor: "latency",
-                width: 150,
-                getProps: (state, rowInfo, column, row) => {
-                  if(rowInfo != null){
-                    console.log(rowInfo.row['latency']);
-                  }
-                  return{
-                    style: {
-                      background: rowInfo? '#FF3C3C':'#33cc66'
-                    }
-                  }
-                }
-            }
-        ]
+      Header: "Name",
+      accessor: "device_description"
+    }, {
+      Header: "IP Address",
+      accessor: "device_ip_address"
+    }, {
+      Header: "Network Type",
+      accessor: "device_type"
+    }, {
+      Header: "Network Health",
+      accessor: "latency",
+      width: 150,
+      getProps: (state, rowInfo, column, row) => {
+        if(rowInfo != null){
+          console.log(rowInfo.row['latency']);
+        }
+        return{
+          style: {
+            background: rowInfo? '#FF3C3C':'#33cc66'
+          }
+        }
+      }
     }
 ];
-
-const SubTable = ({data}) => {
-    return(
-        data.map(sites =>
-        sites.site_devices.map(devices =>
-            <ReactTable
-                data={devices}
-                columns={subColumns}
-                defaultPageSize={3}
-                showPagination={false}
-            />
-        )
-    )
-)
-}
 
 export default class TableView extends React.Component {
 
@@ -130,12 +94,11 @@ export default class TableView extends React.Component {
               return (
                   <div style={{padding: "20px"}}>
                       <ReactTable
-                      data={siteDevices}
-                      columns={subColumns}
-                      defaultPageSize={10}
-                      showPagination={false}
+                        data={siteDevices}
+                        columns={subColumns}
+                        defaultPageSize={10}
+                        showPagination={true}
                       />
-
                   </div>
               );
           }}

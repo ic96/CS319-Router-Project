@@ -137,6 +137,8 @@ class MspCompany(models.Model):
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     contact_first_name = models.CharField(max_length=30, blank=True, null=True)
     contact_last_name = models.CharField(max_length=30, blank=True, null=True)
+    username = models.CharField(max_length=50, blank=True, null=True)
+    password = models.CharField(max_length=30, blank=True, null=True)
 
     class Meta:
         managed = False

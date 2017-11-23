@@ -50,7 +50,9 @@ CREATE TABLE msp_company (
     company_name character varying(50) NOT NULL,
     phone_number character varying(15),
     contact_first_name character varying(30),
-    contact_last_name character varying(30)
+    contact_last_name character varying(30),
+    username character varying(50),
+    password character varying(30),
 );
 
 
