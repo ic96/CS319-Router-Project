@@ -29,11 +29,6 @@ class Home(View):
                 """
             )
 
-def datetime_handler(x):
-    if isinstance(x, datetime.datetime):
-        return x.isoformat()
-    raise TypeError("Unknown type")
-
 def device_history(request, device_id):
     print('Called device_history with {0}'.format(device_id))
     data_capture = models.MspDataCapture.objects.filter(device_recid=device_id)[:100]
@@ -42,7 +37,7 @@ def device_history(request, device_id):
         'device_id': device_data.device_recid.device_recid,
         'ip_address': device_data.device_recid.ip_address,
         'latency': float(device_data.latency_milliseconds),
-        'date_recorded': json.dumps(device_data.date_recorded, default=datetime_handler),
+        'date_recorded': device_data.date_recorded.isoformat(),
     } for device_data in data_capture]
     return HttpResponse(json.dumps(res))
 
