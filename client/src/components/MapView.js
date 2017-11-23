@@ -36,7 +36,6 @@ const { device_recid, device_type, device_manufacturer, device_description,
                 <td> {device_description} </td>
                 <td> {latency} </td>
                 <button>Reporting Graph</button>
-                <button>Retrieve</button>
             </tr>
                 )
             }
