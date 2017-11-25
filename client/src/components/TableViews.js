@@ -50,28 +50,58 @@ const columns = [
 
 const subColumns = [
     {
-      Header: "Name",
-      accessor: "device_description"
-    }, {
-      Header: "IP Address",
-      accessor: "device_ip_address"
-    }, {
-      Header: "Network Type",
-      accessor: "device_type"
-    }, {
-      Header: "Network Health",
-      accessor: "latency",
-      width: 150,
-      getProps: (state, rowInfo, column, row) => {
-        if(rowInfo != null){
-          console.log(rowInfo.row['latency']);
-        }
-        return{
-          style: {
-            background: rowInfo? '#FF3C3C':'#33cc66'
-          }
-        }
-      }
+        columns: [
+            {
+                Header: "Name",
+                accessor: "device_description"
+            }
+        ]
+    },
+    {
+        columns: [
+            {
+                Header: "IP Address",
+                accessor: "device_ip_address"
+
+
+            }
+        ]
+    },
+    {
+        columns: [
+            {
+                Header: "Network Type",
+                accessor: "device_type"
+            }
+        ]
+    },
+    {
+        columns: [
+            {
+                Header: "Network Health",
+                accessor: "latency",
+                width: 150,
+                getProps: (state, rowInfo, column, row) => {
+                  if(rowInfo != null && rowInfo.row['latency'] > 0){
+                    console.log(rowInfo.row['latency']);
+                    return{
+                    	style: {
+                    		background: '#33cc66' 
+                    	}
+                    }
+                  }
+                  return{
+                    style: {
+                      background:'#FF3C3C'
+                    }
+                  }
+                },
+                filterMethod: (filter, row) =>{
+                	console.log(filter.value);
+                	console.log(row);
+                }
+            }
+        ]
     }
 ];
 
@@ -87,6 +117,9 @@ export default class TableView extends React.Component {
           data={data}
           columns={columns}
           defaultPageSize={10}
+          filterable
+          defaultFilterMethod={(filter, row) =>
+            String(row[filter.id]).includes(filter.value)}
           className="-striped -highlight"
           SubComponent={row => {
               const siteDevices = row.original.site_devices;
@@ -94,10 +127,13 @@ export default class TableView extends React.Component {
               return (
                   <div style={{padding: "20px"}}>
                       <ReactTable
-                        data={siteDevices}
-                        columns={subColumns}
-                        defaultPageSize={10}
-                        showPagination={true}
+                      data={siteDevices}
+                      columns={subColumns}
+                      defaultPageSize={10}
+                      showPagination={false}
+                      filterable
+          			  defaultFilterMethod={(filter, row) =>
+            			String(row[filter.id]).includes(filter.value)}
                       />
                   </div>
               );
