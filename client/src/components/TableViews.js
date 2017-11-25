@@ -82,14 +82,23 @@ const subColumns = [
                 accessor: "latency",
                 width: 150,
                 getProps: (state, rowInfo, column, row) => {
-                  if(rowInfo != null){
+                  if(rowInfo != null && rowInfo.row['latency'] > 0){
                     console.log(rowInfo.row['latency']);
+                    return{
+                    	style: {
+                    		background: '#33cc66' 
+                    	}
+                    }
                   }
                   return{
                     style: {
-                      background: rowInfo? '#FF3C3C':'#33cc66'
+                      background:'#FF3C3C'
                     }
                   }
+                },
+                filterMethod: (filter, row) =>{
+                	console.log(filter.value);
+                	console.log(row);
                 }
             }
         ]
