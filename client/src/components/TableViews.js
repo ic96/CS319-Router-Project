@@ -123,6 +123,9 @@ export default class TableView extends React.Component {
           data={data}
           columns={columns}
           defaultPageSize={10}
+          filterable
+          defaultFilterMethod={(filter, row) =>
+            String(row[filter.id]).includes(filter.value)}
           className="-striped -highlight"
           SubComponent={row => {
               const siteDevices = row.original.site_devices;
@@ -134,6 +137,9 @@ export default class TableView extends React.Component {
                       columns={subColumns}
                       defaultPageSize={10}
                       showPagination={false}
+                      filterable
+          			  defaultFilterMethod={(filter, row) =>
+            			String(row[filter.id]).includes(filter.value)}
                       />
 
                   </div>
