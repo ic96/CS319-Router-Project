@@ -29,6 +29,22 @@ class Home(View):
                 """
             )
 
+# very flaky api, not sure what happens if invalid username and shit but if password is invalid then gg
+def login(request):
+    # todo: error handling
+    params = request.GET
+    print(request.GET)
+    print(request.GET['username'])
+    print(request.GET['password'])
+    username = params['username']
+    password = params['password']
+    credentials = models.MspCompany.objects.filter(username=username)[0];
+    print(credentials)
+    if credentials.password == password:
+        return HttpResponse(credentials.company_recid)
+    else:
+        return HttpResponse(None)
+
 def device_history(request, device_id):
     print('Called device_history with {0}'.format(device_id))
     data_capture = models.MspDataCapture.objects.filter(device_recid=device_id)[:100]

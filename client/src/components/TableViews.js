@@ -9,35 +9,35 @@ import "react-table/react-table.css";
 
 const columns = [
     {
-        columns: [
-            {
-                Header: "Name",
-                accessor: "site_address1"
-            },
-            {
-                Header: "Usage",
-                id: "usage",
-                accessor: d => d.usage
+        Header: "Name",
+        accessor: "site_address1",
+        // TODO: HANDLE ONCLICK THE SAME WAY HERE AS IN MAPVIEW
+        getProps: (state, rowInfo, column, row) => {
+          if (rowInfo != null) {
+            return {
+              onClick: () => {
+                console.log(rowInfo);
+              }
             }
-        ]
-    },
-    {
-        columns: [
-            {
-                Header: "Clients",
-                accessor: "clients",
+          }
 
-            }
-        ]
+          return {};
+        },
     },
     {
-        columns: [
-            {
-                Header: "Network Type",
-                accessor: "network_type"
-            }
-        ]
+        Header: "Usage",
+        id: "usage",
+        accessor: d => d.usage
     },
+    {
+        Header: "Clients",
+        accessor: "clients",
+
+    },
+    {
+        Header: "Network Type",
+        accessor: "network_type"
+    }
     //{
     //     columns: [
     //         {
@@ -105,21 +105,6 @@ const subColumns = [
     }
 ];
 
-const SubTable = ({data}) => {
-    return(
-        data.map(sites =>
-        sites.site_devices.map(devices =>
-            <ReactTable
-                data={devices}
-                columns={subColumns}
-                defaultPageSize={3}
-                showPagination={false}
-            />
-        )
-    )
-)
-}
-
 export default class TableView extends React.Component {
 
 
@@ -150,7 +135,6 @@ export default class TableView extends React.Component {
           			  defaultFilterMethod={(filter, row) =>
             			String(row[filter.id]).includes(filter.value)}
                       />
-
                   </div>
               );
           }}

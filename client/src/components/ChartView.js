@@ -1,9 +1,9 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
 import axios from 'axios';
 
 type ChartViewProps = {
-    sites: [],
+    deviceIds: [],
 };
 
 type CharViewState = {
@@ -11,7 +11,7 @@ type CharViewState = {
     data: ?*,
 };
 
-class ChartView extends PureComponent {
+class ChartView extends Component {
     state: CharViewState;
     props: ChartViewProps;
 
@@ -82,16 +82,31 @@ class ChartView extends PureComponent {
         return formattedData;
     }
 
-    componentDidMount() {
-        const { sites } = this.props;
-        const promises = [];
-        sites.forEach(site => {
-            site.site_devices.forEach(device => {
-                promises.push(axios.get(`/devicehistory/${device.device_recid}/`));
-                // promises.push(axios.get(`http://0.0.0.0:8000/devicehistory/${device.device_recid}/`));
-            });
-        });
+    componentWillReceiveProps(nextProps) {
+      console.log('called');
+        const { deviceIds } = nextProps;
 
+        // if no devices then reset the data
+        if (deviceIds.length === 0) {
+          return this.setState({
+            isLoading: true,
+            data: null,
+          });
+        }
+
+        // if it's the same shit don't query again
+        if (this.props.deviceIds === deviceIds) {
+          return;
+        }
+
+        this.setState({
+          isLoading: true
+        });
+        const promises = [];
+        deviceIds.forEach(deviceId => {
+          promises.push(axios.get(`/devicehistory/${deviceId}/`));
+          // promises.push(axios.get(`http://0.0.0.0:8000/devicehistory/${deviceId}/`));
+        });
         Promise.all(promises)
         .then(res => {
             const formattedData = this.formatData(res);
@@ -108,7 +123,7 @@ class ChartView extends PureComponent {
     render() {
         const { data, isLoading } = this.state;
         if (isLoading) {
-            return <Line/>;
+            return <Line data={[]}/>;
         } else {
             return <Line data={data}/>;
         }
