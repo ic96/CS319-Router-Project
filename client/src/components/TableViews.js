@@ -116,7 +116,7 @@ export default class TableView extends React.Component {
         <ReactTable
           data={data}
           columns={columns}
-          defaultPageSize={10}
+          defaultPageSize={5}
           filterable
           defaultFilterMethod={(filter, row) =>
             String(row[filter.id]).includes(filter.value)}
@@ -129,7 +129,7 @@ export default class TableView extends React.Component {
                       <ReactTable
                       data={siteDevices}
                       columns={subColumns}
-                      defaultPageSize={10}
+                      defaultPageSize={data.length}
                       showPagination={false}
                       filterable
           			  defaultFilterMethod={(filter, row) =>
