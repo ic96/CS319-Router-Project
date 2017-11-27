@@ -1,3 +1,14 @@
+###############################################################################
+#   Name: Location.py                                                        ##
+#   Author: Louis Maue                                                       #
+#   Date: Nov 27. 2017                                                       ##
+#   Objective: Fill msp_site table with the reported Longitude and Latitude  ##
+#               from Google Maps API                                         ##
+#                                                                            ##
+#                                                                            ##
+###############################################################################
+
+
 import psycopg2
 import googlemaps
 import json
@@ -32,10 +43,10 @@ try:
          print (update_query)
          cur.execute(update_query)
       else:
-        print(address+" Got No result")
+        print(address+" Got No result"
 
-#      conn.commit()
-#      conn.close()
+
+
 except Exception as e:
        print(e)
 finally:
