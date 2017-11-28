@@ -12,17 +12,6 @@ const columns = [
         Header: "Site Description",
         accessor: "site_description",
         // TODO: HANDLE ONCLICK THE SAME WAY HERE AS IN MAPVIEW
-        getProps: (state, rowInfo, column, row) => {
-          if (rowInfo != null) {
-            return {
-              onClick: () => {
-                console.log(rowInfo);
-              }
-            }
-          }
-
-          return {};
-        },
     },
     {
         Header: "Site Address 1",
@@ -94,19 +83,23 @@ const subColumns = [
                 accessor: "latency",
                 width: 150,
                 getProps: (state, rowInfo, column, row) => {
-                  if(rowInfo != null && rowInfo.row['latency'] > 0){
-                    console.log(rowInfo.row['latency']);
-                    return{
-                    	style: {
-                    		background: '#33cc66' 
-                    	}
+                  if(rowInfo != null){
+                    if (rowInfo.row['latency'] > 30000) {
+                      console.log(rowInfo.row['latency']);
+                      return{
+                        style: {
+                          background: 'red',
+                        }
+                      }
+                    }
+
+                    return {
+                      style: {
+                        background: 'green',
+                      }
                     }
                   }
-                  return{
-                    style: {
-                      background:'#FF3C3C'
-                    }
-                  }
+                  return {};
                 },
                 filterMethod: (filter, row) =>{
                 	console.log(filter.value);
@@ -121,7 +114,7 @@ export default class TableView extends React.Component {
 
 
   render() {
-    const { data } = this.props;
+    const { data, onSiteSelected, onDeviceSelected} = this.props;
     console.log(data);
     // Add site_client field to data
       {data.forEach(site =>{
@@ -132,9 +125,28 @@ export default class TableView extends React.Component {
     return (
       <div>
         <ReactTable
+        getTdProps={(state, rowInfo, column, instance) => {
+          return {
+            onClick: (e, handleOriginal) => {
+              console.log(column.Header);
+              if(column.Header != null){
+                onSiteSelected(data[rowInfo.index].site_devices);
+              }
+
+              // IMPORTANT! React-Table uses onClick internally to trigger
+              // events like expanding SubComponents and pivots.
+              // By default a custom 'onClick' handler will override this functionality.
+              // If you want to fire the original onClick handler, call the
+              // 'handleOriginal' function.
+              if (handleOriginal) {
+                handleOriginal()
+              }
+           }
+          }
+        }}
           data={data}
           columns={columns}
-          defaultPageSize={10}
+          defaultPageSize={5}
           filterable
           defaultFilterMethod={(filter, row) =>
             String(row[filter.id]).includes(filter.value)}
@@ -145,9 +157,28 @@ export default class TableView extends React.Component {
               return (
                   <div style={{padding: "20px"}}>
                       <ReactTable
+                      getTdProps={(state, rowInfo, column, instance) => {
+                        return {
+                          onClick: (e, handleOriginal) => {
+                            console.log(column.Header);
+                            if(column.Header != null){
+                              onSiteSelected(data[rowInfo.index].site_devices);
+                            }
+
+                            // IMPORTANT! React-Table uses onClick internally to trigger
+                            // events like expanding SubComponents and pivots.
+                            // By default a custom 'onClick' handler will override this functionality.
+                            // If you want to fire the original onClick handler, call the
+                            // 'handleOriginal' function.
+                            if (handleOriginal) {
+                              handleOriginal()
+                            }
+                         }
+                        }
+                      }}
                       data={siteDevices}
                       columns={subColumns}
-                      defaultPageSize={10}
+                      defaultPageSize={data.length}
                       showPagination={false}
                       filterable
           			  defaultFilterMethod={(filter, row) =>

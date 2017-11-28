@@ -74,7 +74,7 @@ class App extends Component {
 
   handleSubmit = (username, password) => {
     // axios.get(`http://0.0.0.0:8000/login?username=${username}&password=${password}`)
-    axios.get(`/login?username=${username}&password=${password}`)
+    axios.get(`/userlogin/?username=${username}&password=${password}`)
     .then(response => {
         this.setState({
           companyRecId: response.data === 'None' ? null : response.data,
