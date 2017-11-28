@@ -29,11 +29,11 @@ class LoginMenu extends Component {
       return (
         <div>
           <label>
-            Username:
+            Username: &nbsp;
             <input type="text" value={this.state.username} onChange={this.handleChangeUsername} />
           </label>
           <label>
-            Password:
+            Password: &nbsp;
             <input type="text" value={this.state.password} onChange={this.handleChangePassword} />
           </label>
           <input type="submit" value="Submit" onClick={() => {
