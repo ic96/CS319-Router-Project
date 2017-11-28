@@ -12,3 +12,12 @@
     width: 50%;
     height: 100%;
 }
+
+.chartjs-render-monitor {
+    width: 100% !important;
+    height: 90% !important;
+}
+
+.chartTitle {
+    margin-top: 5px;
+}

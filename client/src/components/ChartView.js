@@ -15,8 +15,8 @@ type CharViewState = {
 const ChartMenu = (props) => {
   return (
     <div>
-      <button className='chartMenuButton'>Clear</button>
-      <button className='chartMenuButton'>Print</button>
+      <button className='chartMenuButton' onClick={props.handleClearChart}>Clear</button>
+      <button className='chartMenuButton' onClick={props.handlePrintChart}>Print</button>
     </div>
   );
 };
@@ -37,6 +37,10 @@ class ChartView extends Component {
             color += letters[Math.floor(Math.random() * 16)];
         }
         return color;
+    }
+
+    printChart = () => {
+      window.print();
     }
 
     formatData(data) {
@@ -83,7 +87,8 @@ class ChartView extends Component {
                     formattedData.labels.push(record.date_recorded.toLocaleTimeString());
                 }
                 dataset.data.push(record.latency);
-                dataset.label = record.ip_address;
+                dataset.label = record.device_name;
+                console.log(record);
             });
 
             formattedData.datasets.push(dataset)
@@ -135,7 +140,12 @@ class ChartView extends Component {
 
         return (
           <div className="chartSection">
-            <ChartMenu className="chartView"/>
+            <ChartMenu
+              className="chartView"
+              handleClearChart={this.props.handleClearChart}
+              handlePrintChart={this.printChart}
+            />
+            <div className="chartTitle">Device Latency Chart (ms)</div>
             {
               isLoading ?
               <Line data={[]}/> :

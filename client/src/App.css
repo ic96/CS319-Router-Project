@@ -24,12 +24,18 @@
   font-size: large;
 }
 
-.mapTable {
-  width: 50%;
+.map {
+  width: auto;
 }
 
 .chart {
   width: 50%;
+}
+
+.mapChart {
+  display: flex;
+  height: 500px;
+  width: 100%;
 }
 
 @keyframes App-logo-spin {
@@ -39,4 +45,31 @@
 
 label{
   padding-right: 20px;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .chartTitle {
+    visibility: visible;
+  }
+
+  .chartjs-render-monitor {
+    visibility: visible;
+  }
+
+  .chartTitle {
+    position: absolute;
+    left: 40%;
+    top: 0;
+  }
+  .chartjs-render-monitor {
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 100% !important;
+    height: 50% !important;
+  }
 }

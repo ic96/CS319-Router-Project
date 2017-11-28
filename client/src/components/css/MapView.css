@@ -1,3 +1,13 @@
 .deviceRow:hover {
     background-color: yellow;
 }
+
+.mapMenuButton {
+    padding: 5px 20px;
+    margin: 0px 10px;
+}
+
+.mapSection {
+    width: 50%;
+    height: 100%;
+}

@@ -27,7 +27,7 @@ export const UniserveHeader = () => {
 export const UniserveMenu = () => {
   return (
     <ul id="menu_ul">
-    <li><a href="/" className="">Login</a>
+    <li><a href="/" className="">Devices</a>
     </li></ul>
   );
 };

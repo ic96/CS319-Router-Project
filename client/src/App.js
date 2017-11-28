@@ -52,6 +52,12 @@ class App extends Component {
     companyRecId: null,
   };
 
+  onClearChart = () => {
+    this.setState({
+      selectedIds: {},
+    });
+  };
+
   // show graph for site
   onSiteSelected = siteDevices => {
     const selectedIds = this.state.selectedIds;
@@ -116,19 +122,24 @@ class App extends Component {
             companyRecId ?
             ((!isLoading) ?
             <div className='page'>
-              <div className="mapTable">
+              <div className="mapChart">
                 <MapView
                   sites={data.data}
                   onSiteSelected={this.onSiteSelected}
                   onDeviceSelected={this.onDeviceSelected}
+                  className="map"
                 />
-                <TableViews
-                  data={data.data}
-                  onSiteSelected={this.onSiteSelected}
-                  onDeviceSelected={this.onDeviceSelected}
+                <ChartView
+                  deviceIds={validIds}
+                  handleClearChart={this.onClearChart}
+                  className="chart"
                 />
               </div>
-              <ChartView deviceIds={validIds} className="chart"/>
+              <TableViews
+                data={data.data}
+                onSiteSelected={this.onSiteSelected}
+                onDeviceSelected={this.onDeviceSelected}
+              />
             </div>:
             <img src={logo} className="App-logo" alt="logo" />
             ) :

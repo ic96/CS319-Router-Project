@@ -12,6 +12,15 @@ import responsiveMarker from "../responsive.png";
 import failureMarker from "../failure.png";
 import './css/MapView.css';
 
+const MapMenu = (props) => {
+  return (
+    <div>
+      <button className='mapMenuButton'>Show/Hide Green</button>
+    </div>
+  );
+};
+
+
 type MapViewProps = {
     center: {
         lat: string,
@@ -31,10 +40,11 @@ type MapViewState = {
 };
 
 const PopUpRow = ({row, handleClick}) => {
-const { device_recid, device_type, device_manufacturer, device_description,
+const { device_id, device_recid, device_type, device_manufacturer, device_description,
         device_ip_address, latency} = row;
         return(
             <tr onClick={() => {handleClick(device_recid)}} className='deviceRow'>
+                <td> {device_id} </td>
                 <td> {device_ip_address} </td>
                 <td> {device_type} </td>
                 <td> {device_manufacturer} </td>
@@ -50,6 +60,7 @@ const PopUp = ({data, handleClick}) => {
             <table>
                 <tbody>
                     <tr>
+                        <th>Name</th>
                         <th>IP Address</th>
                         <th>Device Type</th>
                         <th>Manufacturer</th>
@@ -189,9 +200,12 @@ class MapView extends Component {
             });
         }
 
-        return (<GoogleMap defaultZoom={3} defaultCenter={{ lat: 54.322498, lng: -108.583205 }} options={{ minZoom: 3, maxZoom: 7}}>
-                {content}
-              </GoogleMap>);
+        return (
+                <GoogleMap defaultZoom={3} defaultCenter={{ lat: 54.322498, lng: -108.583205 }} options={{ minZoom: 3, maxZoom: 7}}>
+                    <button className="mapMenuButton">Show/Hide Green</button>
+                    {content}
+                </GoogleMap>
+            );
     }
 }
 
@@ -206,7 +220,7 @@ const GoogleMapView = compose(
   withProps({
     googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBtotw0UsgNWBC8seKmjGg42ANAKHlZZ7c&v=3.exp&libraries=geometry,drawing,places",
     loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `300px` }} />,
+    containerElement: <div style={{ height: `90%`, width:`50%` }} />,
     mapElement: <div style={{ height: `100%` }} />,
     center: { lat: 54.322498, lng: -108.583205 },
   }),

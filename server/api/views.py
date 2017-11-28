@@ -51,6 +51,7 @@ def device_history(request, device_id):
 
     res = [{
         'device_id': device_data.device_recid.device_recid,
+        'device_name': device_data.device_recid.device_id,
         'ip_address': device_data.device_recid.ip_address,
         'latency': float(device_data.latency_milliseconds),
         'date_recorded': device_data.date_recorded.isoformat(),
@@ -132,11 +133,11 @@ def customer_devices(request, customer_id):
 def last_success_pings(request, device_id):
     pings = models.MspDataCapture.objects.filter(device_recid=device_id).order_by('-id')[:5]
     isSuccess = True
-    
+
     for ping in pings:
         if (not ping.responded):
             isSuccess = False
-    
+
     res = {
         'isSuccess': isSuccess,
         'device_recid': device_id
