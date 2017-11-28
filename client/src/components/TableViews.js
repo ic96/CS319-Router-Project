@@ -9,23 +9,35 @@ import "react-table/react-table.css";
 
 const columns = [
     {
-        Header: "Name",
-        accessor: "site_address1",
+        Header: "Site Description",
+        accessor: "site_description",
         // TODO: HANDLE ONCLICK THE SAME WAY HERE AS IN MAPVIEW
     },
     {
-        Header: "Usage",
-        id: "usage",
-        accessor: d => d.usage
+        Header: "Site Address 1",
+        accessor: "site_address1",
     },
     {
-        Header: "Clients",
-        accessor: "clients",
+        Header: "Site Address 2",
+        accessor: "site_address2",
+    },
+    {
+        Header: "Site Location",
+        accessor: "site_city",
+    },
+    {
+        Header: "Site Province",
+        accessor: "site_province",
 
     },
     {
-        Header: "Network Type",
-        accessor: "network_type"
+        Header: "Site Postal Code",
+        accessor: "site_postal_code"
+    },
+
+    {
+        Header: "Clients",
+        accessor: "site_clients"
     }
     //{
     //     columns: [
@@ -103,7 +115,13 @@ export default class TableView extends React.Component {
 
   render() {
     const { data, onSiteSelected, onDeviceSelected} = this.props;
-      var devicesArray = [];
+    console.log(data);
+    // Add site_client field to data
+      {data.forEach(site =>{
+       var clients = site.site_devices.length;
+        site["site_clients"] = clients;
+      })}
+
     return (
       <div>
         <ReactTable
