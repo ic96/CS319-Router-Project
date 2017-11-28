@@ -47,7 +47,7 @@ def login(request):
 
 def device_history(request, device_id):
     print('Called device_history with {0}'.format(device_id))
-    data_capture = models.MspDataCapture.objects.filter(device_recid=device_id)[:100]
+    data_capture = models.MspDataCapture.objects.filter(device_recid=device_id)[:30]
 
     res = [{
         'device_id': device_data.device_recid.device_recid,
