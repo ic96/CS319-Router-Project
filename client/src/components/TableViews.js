@@ -98,6 +98,7 @@ const subColumns = [
                       }
                     }
                   }
+                  return {};
                 },
                 filterMethod: (filter, row) =>{
                 	console.log(filter.value);
