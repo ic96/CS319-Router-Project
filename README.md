@@ -11,9 +11,18 @@ This project extends the existing client portal, allowing customers to visualize
 * Django (ver. 1.11.5)
 
 Check the technical requirements document for a more in-depth requirements list.
+
 External libraries and tools will be downloaded during the installation stage.
 ## Installation
-
+1. Clone this git repo
+1. Cd into the new directory
+1. run `pip install virtualenv`
+1. Then go `virtualenv env`
+This will install and create the virtual environment for the server to run off of 
+1. To go into virtualenv go `source ./env/bin/activate`
+1. Now run `pip install -R requirements.txt`
+1. cd into `./client`
+1. run `npm install` then `npm run build`
 
 
 ## Config
