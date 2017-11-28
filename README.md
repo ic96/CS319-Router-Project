@@ -8,6 +8,7 @@ This project extends the existing client portal, allowing customers to visualize
 	* npm (3.10.8)
 	* pip (9.0.1)
 * React (ver. 15.6.1)
+* Postgres (ver. 9.6.6) 
 * Django (ver. 1.11.5)
 
 Check the technical requirements document for a more in-depth requirements list.
@@ -24,5 +25,6 @@ This will install and create the virtual environment for the server to run off o
 1. cd into `./client`
 1. run `npm install` then `npm run build`
 
+## Setting up the database
 
 ## Config
