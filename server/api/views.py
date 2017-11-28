@@ -47,7 +47,7 @@ def login(request):
 
 def device_history(request, device_id):
     print('Called device_history with {0}'.format(device_id))
-    data_capture = models.MspDataCapture.objects.filter(device_recid=device_id)[:30]
+    data_capture = models.MspDataCapture.objects.filter(device_recid=device_id).order_by('id')[:30]
 
     res = [{
         'device_id': device_data.device_recid.device_recid,
@@ -62,7 +62,7 @@ def device_status(request, device_id):
     print('called')
     print('Called with {0}'.format(device_id))
     # get the latest status report
-    data_capture = models.MspDataCapture.objects.filter(device_recid=device_id).latest('date_recorded')
+    data_capture = models.MspDataCapture.objects.filter(device_recid=device_id).latest('id')
     device = data_capture.device_recid
 
     print('Device id = {0}'.format(device.device_recid))
