@@ -45,4 +45,28 @@ conn = psycopg2.connect(dbname="ubc05", user="ubc05", password="UbC$5")
 Note: in this case, database name is ubc05, username is ubc05, password is UbC$5.
 
 * For the Django backend settings they can be found in `~/<project directory>/server/server/settings.py`
-	* Here you will have to change the database connection information as well 
+	* Here you will have to change the database connection information as well
+
+* To configure the Django backend to integrate with Apache2 you can visit [Here](https://docs.djangoproject.com/en/1.11/howto/deployment/wsgi/modwsgi/) for more information.
+* In the apache2 configuration file for the web server please add these tags to the conf file
+``` 
+WSGIPythonHome /path/to/project/env 
+WSGIPythonPath /path/to/project/server/
+
+WSGIDaemonProcess uniserve
+WSGIProcessGroup uniserve
+
+WSGIScriptAlias / /path-to-project/server/server/wsgi.py
+
+Alias /static/ /path-to-project/client/build/static/
+
+<Directory "/path-to-project/client/build/static/">
+Require all granted
+</Directory>
+
+<Directory "/path-to-project/server/server">
+<Files wsgi.py>
+Require all granted
+</Files>
+
+``` 
