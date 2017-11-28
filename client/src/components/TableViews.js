@@ -115,7 +115,7 @@ export default class TableView extends React.Component {
 
   render() {
     const { data, onSiteSelected, onDeviceSelected} = this.props;
-    console.log(data);
+    //console.log(data);
     // Add site_client field to data
       {data.forEach(site =>{
        var clients = site.site_devices.length;
@@ -153,16 +153,16 @@ export default class TableView extends React.Component {
           className="-striped -highlight"
           SubComponent={row => {
               const siteDevices = row.original.site_devices;
-              console.log(siteDevices);
+              //console.log(siteDevices);
               return (
                   <div style={{padding: "20px"}}>
                       <ReactTable
                       getTdProps={(state, rowInfo, column, instance) => {
                         return {
                           onClick: (e, handleOriginal) => {
-                            console.log(column.Header);
+                            //console.log(rowInfo.original);
                             if(column.Header != null){
-                              onSiteSelected(data[rowInfo.index].site_devices);
+                              onDeviceSelected(rowInfo.original.device_recid);
                             }
 
                             // IMPORTANT! React-Table uses onClick internally to trigger
