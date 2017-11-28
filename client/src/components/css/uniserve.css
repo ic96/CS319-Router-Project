@@ -118,6 +118,8 @@ td.page {
     border-color: #e54e00;
     padding: 10px 60px;
     height: auto;
+    width: auto;
+    display: flex;
 }
 
 .subtitle {

@@ -1,0 +1,14 @@
+.chartView {
+    width: 100%;
+    height: 100%;
+}
+
+.chartMenuButton {
+    padding: 5px 20px;
+    margin: 0px 10px;
+}
+
+.chartSection {
+    width: 50%;
+    height: 100%;
+}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
 import axios from 'axios';
+import './css/ChartView.css';
 
 type ChartViewProps = {
     deviceIds: [],
@@ -9,6 +10,15 @@ type ChartViewProps = {
 type CharViewState = {
     isLoading: Boolean,
     data: ?*,
+};
+
+const ChartMenu = (props) => {
+  return (
+    <div>
+      <button className='chartMenuButton'>Clear</button>
+      <button className='chartMenuButton'>Print</button>
+    </div>
+  );
 };
 
 class ChartView extends Component {
@@ -70,7 +80,7 @@ class ChartView extends Component {
             // push to dataset
             }).forEach((record, i) => {
                 if (!formattedData.labels[i]) {
-                    formattedData.labels.push(record.date_recorded);
+                    formattedData.labels.push(record.date_recorded.toLocaleTimeString());
                 }
                 dataset.data.push(record.latency);
                 dataset.label = record.ip_address;
@@ -122,11 +132,17 @@ class ChartView extends Component {
 
     render() {
         const { data, isLoading } = this.state;
-        if (isLoading) {
-            return <Line data={[]}/>;
-        } else {
-            return <Line data={data}/>;
-        }
+
+        return (
+          <div className="chartSection">
+            <ChartMenu className="chartView"/>
+            {
+              isLoading ?
+              <Line data={[]}/> :
+              <Line data={data}/>
+            }
+          </div>
+        );
     }
 };
 

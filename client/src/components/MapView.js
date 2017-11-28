@@ -206,7 +206,7 @@ const GoogleMapView = compose(
   withProps({
     googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBtotw0UsgNWBC8seKmjGg42ANAKHlZZ7c&v=3.exp&libraries=geometry,drawing,places",
     loadingElement: <div style={{ height: `100%` }} />,
-    containerElement: <div style={{ height: `700px` }} />,
+    containerElement: <div style={{ height: `300px` }} />,
     mapElement: <div style={{ height: `100%` }} />,
     center: { lat: 54.322498, lng: -108.583205 },
   }),
