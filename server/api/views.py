@@ -138,6 +138,7 @@ def last_success_pings(request, device_id):
             isSuccess = False
     
     res = {
-        'isSuccess': isSuccess
+        'isSuccess': isSuccess,
+        'device_recid': device_id
     }
     return HttpResponse(json.dumps(res))

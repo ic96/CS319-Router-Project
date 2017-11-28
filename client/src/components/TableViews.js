@@ -1,5 +1,6 @@
 import 'react-table/react-table.css'
 import React from "react";
+import axios from 'axios';
 import { render } from "react-dom";
 import { makeData, Logo, Tips } from "../Utils";
 
@@ -80,22 +81,22 @@ const subColumns = [
         columns: [
             {
                 Header: "Network Health",
-                accessor: "latency",
+                accessor: "isLastFiveSuccess",
                 width: 150,
                 getProps: (state, rowInfo, column, row) => {
                   if(rowInfo != null){
-                    if (rowInfo.row['latency'] > 30000) {
-                      console.log(rowInfo.row['latency']);
+                    if (rowInfo.row['isLastFiveSuccess']) {
+                      console.log(rowInfo.row['isLastFiveSuccess']);
                       return{
                         style: {
-                          background: 'red',
+                          background: 'green',
                         }
                       }
                     }
 
                     return {
                       style: {
-                        background: 'green',
+                        background: 'red',
                       }
                     }
                   }
@@ -111,6 +112,42 @@ const subColumns = [
 ];
 
 export default class TableView extends React.Component {
+
+  componentDidMount() {
+        const { data} = this.props;
+        if (data) {
+            const recIdToDeviceMap = {};
+            const promises = [];
+
+            // basically here we get a bunch of queries for device data and wait for them all at once
+            data.forEach(site => {
+                const siteId = site.site_id;
+
+                // add device id + site id to map and add query for device data
+                site.site_devices.forEach((device, i) => {
+                    const recId = device.device_recid;
+                    recIdToDeviceMap[recId] = device;
+
+                    // to work on development mode uncomment line 61 and comment line 62
+                    promises.push(axios.get(`http://0.0.0.0:8000/lastsuccesspings/${recId}/`));
+                    //promises.push(axios.get(`/lastsuccesspings/${recId}/`));
+
+                });
+            });
+
+            Promise.all(promises).then(siteSuccessResults => {
+                siteSuccessResults.forEach(result => {
+                  //console.log(result);
+
+                  recIdToDeviceMap[result.data.device_recid]["isLastFiveSuccess"] = result.data.isSuccess;
+                  console.log(recIdToDeviceMap[result.data.device_recid]);
+                });
+            }, err => {
+                console.log(err);
+            })
+
+        }
+    }
 
 
   render() {
