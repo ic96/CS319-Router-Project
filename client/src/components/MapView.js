@@ -49,7 +49,7 @@ const { device_id, device_recid, device_type, device_manufacturer, device_descri
                 <td> {device_type} </td>
                 <td> {device_manufacturer} </td>
                 <td> {device_description} </td>
-                <td> {latency} </td>
+                <td> {latency + ' ms'} </td>
             </tr>
                 )
             }
