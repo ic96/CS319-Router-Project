@@ -25,6 +25,21 @@ This will install and create the virtual environment for the server to run off o
 1. cd into `./client`
 1. run `npm install` then `npm run build`
 
-## Setting up the database
-
 ## Config
+In ping-crontab.py, modify the following line with the correct database name and credentials:
+conn = psycopg2.connect(dbname="ubc05", user="ubc05", password="UbC$5")
+Note: in this case, database name is ubc05, username is ubc05, password is UbC$5.
+
+In consolidation-crontab.py, modify the following line with the correct database name and credentials:
+conn = psycopg2.connect(dbname="ubc05", user="ubc05", password="UbC$5")
+Note: in this case, database name is ubc05, username is ubc05, password is UbC$5.
+
+
+In device-crontab.py, modify the following line with the correct database name and credentials:
+conn = psycopg2.connect(dbname="ubc05", user="ubc05", password="UbC$5")
+Note: in this case, database name is ubc05, username is ubc05, password is UbC$5.
+
+
+In location.py, modify the following line with the correct database name and credentials:
+conn = psycopg2.connect(dbname="ubc05", user="ubc05", password="UbC$5")
+Note: in this case, database name is ubc05, username is ubc05, password is UbC$5.
