@@ -43,3 +43,6 @@ Note: in this case, database name is ubc05, username is ubc05, password is UbC$5
 In location.py, modify the following line with the correct database name and credentials:
 conn = psycopg2.connect(dbname="ubc05", user="ubc05", password="UbC$5")
 Note: in this case, database name is ubc05, username is ubc05, password is UbC$5.
+
+* For the Django backend settings they can be found in `~/<project directory>/server/server/settings.py`
+	* Here you will have to change the database connection information as well 
