@@ -116,17 +116,19 @@ class App extends Component {
             companyRecId ?
             ((!isLoading) ?
             <div className='page'>
-              <MapView
-                sites={data.data}
-                onSiteSelected={this.onSiteSelected}
-                onDeviceSelected={this.onDeviceSelected}
-              />
-              <ChartView deviceIds={validIds} />
-              <TableViews
-                data={data.data}
-                onSiteSelected={this.onSiteSelected}
-                onDeviceSelected={this.onDeviceSelected}
-              />
+              <div className="mapTable">
+                <MapView
+                  sites={data.data}
+                  onSiteSelected={this.onSiteSelected}
+                  onDeviceSelected={this.onDeviceSelected}
+                />
+                <TableViews
+                  data={data.data}
+                  onSiteSelected={this.onSiteSelected}
+                  onDeviceSelected={this.onDeviceSelected}
+                />
+              </div>
+              <ChartView deviceIds={validIds} className="chart"/>
             </div>:
             <img src={logo} className="App-logo" alt="logo" />
             ) :

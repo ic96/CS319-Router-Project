@@ -12,7 +12,6 @@ export const UniserveHeader = () => {
                 </td>
                 <td></td>
                 <td className="sign_button" style={{ align: 'right' }}>
-                <button id="login" className="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" role="button"><span className="ui-button-text">Sign In</span></button>
                 <div id="dialog"></div>
                 <br />
                 <a href="/?lang=en_CA">English</a>

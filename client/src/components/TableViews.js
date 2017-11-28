@@ -83,14 +83,12 @@ const subColumns = [
                 accessor: "latency",
                 width: 150,
                 getProps: (state, rowInfo, column, row) => {
-                  if(rowInfo != null){
-                    if (rowInfo.row['latency'] > 30000) {
-                      console.log(rowInfo.row['latency']);
-                      return{
-                        style: {
-                          background: 'red',
-                        }
-                      }
+                  if(rowInfo != null && rowInfo.row['latency'] > 0){
+                    console.log(rowInfo.row['latency']);
+                    return{
+                    	style: {
+                    		background: '#33cc66'
+                    	}
                     }
 
                     return {
