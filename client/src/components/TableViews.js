@@ -12,17 +12,6 @@ const columns = [
         Header: "Name",
         accessor: "site_address1",
         // TODO: HANDLE ONCLICK THE SAME WAY HERE AS IN MAPVIEW
-        getProps: (state, rowInfo, column, row) => {
-          if (rowInfo != null) {
-            return {
-              onClick: () => {
-                console.log(rowInfo);
-              }
-            }
-          }
-
-          return {};
-        },
     },
     {
         Header: "Usage",
@@ -113,11 +102,30 @@ export default class TableView extends React.Component {
 
 
   render() {
-    const { data } = this.props;
+    const { data, onSiteSelected, onDeviceSelected} = this.props;
       var devicesArray = [];
     return (
       <div>
         <ReactTable
+        getTdProps={(state, rowInfo, column, instance) => {
+          return {
+            onClick: (e, handleOriginal) => {
+              console.log(column.Header);
+              if(column.Header != null){
+                onSiteSelected(data[rowInfo.index].site_devices);
+              }
+
+              // IMPORTANT! React-Table uses onClick internally to trigger
+              // events like expanding SubComponents and pivots.
+              // By default a custom 'onClick' handler will override this functionality.
+              // If you want to fire the original onClick handler, call the
+              // 'handleOriginal' function.
+              if (handleOriginal) {
+                handleOriginal()
+              }
+           }
+          }
+        }}
           data={data}
           columns={columns}
           defaultPageSize={5}
@@ -131,6 +139,25 @@ export default class TableView extends React.Component {
               return (
                   <div style={{padding: "20px"}}>
                       <ReactTable
+                      getTdProps={(state, rowInfo, column, instance) => {
+                        return {
+                          onClick: (e, handleOriginal) => {
+                            console.log(column.Header);
+                            if(column.Header != null){
+                              onSiteSelected(data[rowInfo.index].site_devices);
+                            }
+
+                            // IMPORTANT! React-Table uses onClick internally to trigger
+                            // events like expanding SubComponents and pivots.
+                            // By default a custom 'onClick' handler will override this functionality.
+                            // If you want to fire the original onClick handler, call the
+                            // 'handleOriginal' function.
+                            if (handleOriginal) {
+                              handleOriginal()
+                            }
+                         }
+                        }
+                      }}
                       data={siteDevices}
                       columns={subColumns}
                       defaultPageSize={data.length}
