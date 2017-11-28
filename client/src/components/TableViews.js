@@ -129,8 +129,8 @@ export default class TableView extends React.Component {
                     recIdToDeviceMap[recId] = device;
 
                     // to work on development mode uncomment line 61 and comment line 62
-                    promises.push(axios.get(`http://0.0.0.0:8000/lastsuccesspings/${recId}/`));
-                    //promises.push(axios.get(`/lastsuccesspings/${recId}/`));
+                    //promises.push(axios.get(`http://0.0.0.0:8000/lastsuccesspings/${recId}/`));
+                    promises.push(axios.get(`/lastsuccesspings/${recId}/`));
 
                 });
             });
