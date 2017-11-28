@@ -129,15 +129,15 @@ def customer_devices(request, customer_id):
 
 	return HttpResponse(json.dumps(site_list))
 
-  def last_success_pings(request, device_id):
+def last_success_pings(request, device_id):
     pings = models.MspDataCapture.objects.filter(device_recid=device_id)[:5]
     isSuccess = True
     
     for ping in pings:
-      if (not ping.responded):
-        isSuccess = False
+        if (not ping.responded):
+            isSuccess = False
     
     res = {
-    'isSuccess': isSuccess
-  }
-  return HttpResponse(json.dumps(res))
+        'isSuccess': isSuccess
+    }
+    return HttpResponse(json.dumps(res))
