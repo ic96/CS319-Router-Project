@@ -144,7 +144,7 @@ export default class TableView extends React.Component {
     //console.log(data);
     // Add site_client field to data
       {data.forEach(site =>{
-       var clients = site.site_devices.length;
+       var clients = site.site_devices.length.toString();
         site["site_clients"] = clients;
       })}
 
@@ -175,7 +175,8 @@ export default class TableView extends React.Component {
           defaultPageSize={data.length}
           filterable
           defaultFilterMethod={(filter, row) =>
-            String(row[filter.id]).includes(filter.value.toLowerCase())}
+                  String(row[filter.id].toLowerCase()).includes(filter.value.toLowerCase())}
+
           className="-striped -highlight"
           SubComponent={row => {
               const siteDevices = row.original.site_devices;
@@ -208,7 +209,7 @@ export default class TableView extends React.Component {
                       showPagination={false}
                       filterable
           			  defaultFilterMethod={(filter, row) =>
-            			String(row[filter.id]).includes(filter.value.toLowerCase())}
+            			String(row[filter.id].toLowerCase()).includes(filter.value.toLowerCase())}
                       />
                   </div>
               );
