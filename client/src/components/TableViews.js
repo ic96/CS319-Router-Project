@@ -29,7 +29,6 @@ const columns = [
     {
         Header: "Site Province",
         accessor: "site_province",
-
     },
     {
         Header: "Site Postal Code",
@@ -40,14 +39,6 @@ const columns = [
         Header: "Clients",
         accessor: "site_clients"
     }
-    //{
-    //     columns: [
-    //         {
-    //             Header: "Network Health",
-    //             accessor: "network_health"
-    //         }
-    //     ]
-    // }
 ];
 
 const subColumns = [
@@ -64,8 +55,6 @@ const subColumns = [
             {
                 Header: "IP Address",
                 accessor: "device_ip_address"
-
-
             }
         ]
     },
@@ -183,10 +172,10 @@ export default class TableView extends React.Component {
         }}
           data={data}
           columns={columns}
-          defaultPageSize={5}
+          defaultPageSize={data.length}
           filterable
           defaultFilterMethod={(filter, row) =>
-            String(row[filter.id]).includes(filter.value)}
+            String(row[filter.id]).includes(filter.value.toLowerCase())}
           className="-striped -highlight"
           SubComponent={row => {
               const siteDevices = row.original.site_devices;
@@ -215,11 +204,11 @@ export default class TableView extends React.Component {
                       }}
                       data={siteDevices}
                       columns={subColumns}
-                      defaultPageSize={data.length}
+                      defaultPageSize={siteDevices.length}
                       showPagination={false}
                       filterable
           			  defaultFilterMethod={(filter, row) =>
-            			String(row[filter.id]).includes(filter.value)}
+            			String(row[filter.id]).includes(filter.value.toLowerCase())}
                       />
                   </div>
               );
